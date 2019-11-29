@@ -1,38 +1,60 @@
 <template>
-  <div>
-    <div class="route-container">
-      <router-link to="/">Home</router-link>
-      <router-link to="/about1">About1</router-link>
-      <router-link to="/about2">About2</router-link>
-      <router-link to="/about3">About3</router-link>
-      <router-link to="/about4">About4</router-link>
-      <router-link to="/v1">v1</router-link>
-      <router-link to="/v2">v2</router-link>
-      <router-link to="/v3">v3</router-link>
-      <router-link to="/v4">v4</router-link>
-    </div>
-    <div>
-      <router-view></router-view>
-    </div>
-  </div>
+  <el-container class="page-container">
+    <el-header>PROGRESS</el-header>
+    <el-container class="main-container">
+      <el-aside width="200px">
+        <el-menu
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          style="border:none"
+          :router="true"
+        >
+          <el-menu-item index="word">
+            <i class="el-icon-menu"></i>
+            <span slot="title">单词</span>
+          </el-menu-item>
+          <el-menu-item index="note">
+            <i class="el-icon-setting"></i>
+            <span slot="title">笔记</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
-
 export default {
-  name: 'home'
-}
+  methods: {}
+};
 </script>
 
 <style scoped lang="scss">
-.route-container{
-  padding:30px;
-  border:1px solid grey;
-  border-radius: 4px;
-  margin:10px auto;
-  width: 80%;
-  a {
-    padding: 5px;
-  }
+.page-container{
+  height: 100%;
+}
+.el-header {
+  background-color: rgb(84, 92, 100);
+  color: #fff;
+  text-align: center;
+  line-height: 60px;
+}
+
+.main-container{
+  height: calc(100% - 60px);
+}
+
+.el-aside {
+  background-color: rgb(84, 92, 100);
+  color: #333;
+  line-height: 200px;
+}
+
+.el-main {
+  color: #333;
 }
 </style>
