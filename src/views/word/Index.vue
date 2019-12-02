@@ -47,7 +47,6 @@
                         v-model="scope.row.level"
                         show-text
                         @change="changeLevel(scope.row)"
-                        :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']"
                         :texts="['极差', '一般', '掌握']"
                     />
                 </template>
