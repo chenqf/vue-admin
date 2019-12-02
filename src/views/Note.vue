@@ -31,22 +31,33 @@
     <el-card class="box-card" style="margin-bottom:20px;" :key="item.id" v-for="item in list">
         <div slot="header" class="clearfix">
             <span>{{item.createTime}}</span>
-            <el-button style="float: right; padding: 3px 0" type="text">修改</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="onEdit(item)">修改</el-button>
         </div>
         <div v-for="o in 4" :key="o" class="text item">
             {{'列表内容 ' + o }}
         </div>
     </el-card>
 
-    <el-dialog :title="form.title" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
-            <el-form-item label="活动名称" >
-                <el-input v-model="form.id" autocomplete="off"></el-input>
+    <el-dialog :title="form.id ? '编辑笔记':'新建笔记'" :close-on-click-modal="false" :close-on-press-escape="false" :visible.sync="dialogFormVisible">
+        <el-form :model="form" label-width="80px">
+
+            <el-form-item label="活动名称" :key="index" v-for="(item,index) in form.dynamicList">
+                <div class="flex">
+                    <el-input class="flex1" type="textarea" v-model="item.value"></el-input>
+                    <span style="padding-left:10px;">
+                        <el-button type="danger" icon="el-icon-delete" @click="onDelLabel(index)" circle></el-button>
+                    </span>
+                </div>
             </el-form-item>
+            
+            <el-form-item label="" >
+                <el-button type="success" @click="onAddLabel" plain>新增</el-button>
+            </el-form-item>
+            
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogCancel">取 消</el-button>
-            <el-button type="primary" @click="dialogSubmit = false">确 定</el-button>
+            <el-button type="primary" @click="dialogSubmit">确 定</el-button>
         </div>
     </el-dialog>
   </div>
@@ -61,7 +72,7 @@ export default {
             list.push({
                 id:Math.random().toString(36).slice(2),
                 createTime:new Date().toString(),
-                value:Math.random()
+                content:Math.random() + ',' + Math.random()
             })
         }
         return {
@@ -69,9 +80,8 @@ export default {
             dialogFormVisible:false,
             //新增编辑内容
             form:{
-                title:'',
                 id:'',
-                context:''
+                dynamicList:[]
             },
             //查询内容
             search:{
@@ -112,11 +122,45 @@ export default {
         }
     },
     methods:{
+        //根据搜索条件，查询笔记列表
         onSearch(){
             console.log(123)
         },
+        //新增笔记
         onAdd(){
             this.dialogFormVisible = true;
+            this.form.id = '';
+            this.form.dynamicList = [{value:''}];
+        },
+        //编辑笔记
+        onEdit(item){
+            this.dialogFormVisible = true;
+            this.form.id = item.id;
+            this.form.dynamicList = item.content ? item.content.split(',').map(i=>({value:i})) : [{value:''}];
+        },
+        onDelLabel(index){
+            this.form.dynamicList.splice(index,1)
+        },
+        onAddLabel(){
+            this.form.dynamicList.push({value:''})
+        },
+        //取消弹窗
+        dialogCancel(){
+            this.dialogFormVisible = false;
+            this.form.id = '';
+            this.form.dynamicList = [];
+        },
+        //确定弹窗
+        dialogSubmit(){
+            //新建
+            if(!this.form.id){
+                console.log(this.form.dynamicList)
+            }
+            //编辑
+            else {
+                console.log(this.form.dynamicList)
+            }
+            this.dialogFormVisible = false;
         },
     }
 };
@@ -125,5 +169,11 @@ export default {
 <style lang="scss" scoped>
 .search-container{
     margin-bottom:20px;
+}
+.flex{
+    display: flex;
+}
+.flex1{
+    flex:1;
 }
 </style> 
