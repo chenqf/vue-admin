@@ -10,14 +10,23 @@
           style="border:none"
           :router="true"
         >
-          <el-menu-item index="word">
-            <i class="el-icon-menu"></i>
-            <span slot="title">单词</span>
-          </el-menu-item>
-          <el-menu-item index="note">
-            <i class="el-icon-setting"></i>
-            <span slot="title">笔记</span>
-          </el-menu-item>
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>单词</span>
+            </template>
+            <el-menu-item index="/word/review">今日复习</el-menu-item>
+            <el-menu-item index="/word/test">随机联系</el-menu-item>
+            <el-menu-item index="/word/index">总览</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-setting"></i>
+              <span>笔记</span>
+            </template>
+            <el-menu-item index="/note/review">今日复习</el-menu-item>
+            <el-menu-item index="/note/index">总览</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
@@ -33,7 +42,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .page-container{
   height: 100%;
 }
@@ -56,5 +65,11 @@ export default {
 
 .el-main {
   color: #333;
+}
+.flex{
+    display: flex;
+}
+.flex1{
+    flex:1;
 }
 </style>

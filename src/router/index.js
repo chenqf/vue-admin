@@ -11,14 +11,29 @@ const routes = [
     component: Home,
     children: [
       {
-        path: 'note',
-        name: 'note',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Note.vue')
+        path: 'note/index',
+        name: 'note/index',
+        component: () => import(/* webpackChunkName: "about" */ '../views/note/Index.vue')
       },
       {
-        path: 'word',
-        name: 'word',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Word.vue')
+        path: 'note/review',
+        name: 'note/review',
+        component: () => import(/* webpackChunkName: "about" */ '../views/note/Review.vue')
+      },
+      {
+        path: 'word/index',
+        name: 'word/index',
+        component: () => import(/* webpackChunkName: "about" */ '../views/word/Index.vue')
+      },
+      {
+        path: 'word/review',
+        name: 'word/review',
+        component: () => import(/* webpackChunkName: "about" */ '../views/word/Review.vue')
+      },
+      {
+        path: 'word/test',
+        name: 'word/test',
+        component: () => import(/* webpackChunkName: "about" */ '../views/word/Test.vue')
       }
     ]
   }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        word
+        review
     </div>
 </template>
 
