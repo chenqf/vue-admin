@@ -15,8 +15,9 @@
               <i class="el-icon-location"></i>
               <span>单词</span>
             </template>
+            <el-menu-item index="/word/search">查词</el-menu-item>
             <el-menu-item index="/word/review">今日复习</el-menu-item>
-            <el-menu-item index="/word/test">随机联系</el-menu-item>
+            <el-menu-item index="/word/test">随机练习</el-menu-item>
             <el-menu-item index="/word/index">总览</el-menu-item>
           </el-submenu>
           <el-submenu index="2">

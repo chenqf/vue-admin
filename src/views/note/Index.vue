@@ -16,7 +16,7 @@
                 <el-input v-model="search.endTime" placeholder="结束时间"></el-input>
             </el-form-item>
             <el-form-item label="内容">
-                <el-input v-model="search.context" placeholder="内容"></el-input>
+                <el-input v-model="search.value" placeholder="内容"></el-input>
             </el-form-item>
             <el-form-item style="margin-left:20px">
                  <el-button type="primary" @click="onSearch" round>查询</el-button>
@@ -68,7 +68,7 @@ export default {
             search:{
                 startTime:'',
                 endTime:'',
-                context:''
+                value:''
             },
             //日期快捷配置
             pickerOptions: {
