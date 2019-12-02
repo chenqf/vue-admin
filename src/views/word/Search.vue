@@ -1,15 +1,26 @@
 <template>
-    <div>
+    <div style="padding:100px 200px;">
         <!-- 搜索区 -->
-        <div style="padding:40px;" v-on:keyup.enter="searchWord">
+        <div style="margin-bottom:60px;" v-on:keyup.enter="searchWord">
             <el-input placeholder="请输入需要查询的单词" v-model="input" clearable>
-                <el-button   @click="searchWord" slot="append" icon="el-icon-search" type="primary">查  询</el-button>
+                <el-button @click="searchWord" slot="append" icon="el-icon-search" type="primary">查  询</el-button>
             </el-input>
         </div>
 
         <!-- 结果区 -->
-        <div>
-
+        <div class="flex-container">
+            <div style="font-size:40px;font-weight:800;width:100%">
+                {{item.name}}
+            </div>
+            <div class="phonetic">
+                <span @click="onListenByUS">美音：[{{item.usPhonetic}}]</span>
+                <span @click="onListenByUK">英音：[{{item.ukPhonetic}}]</span>
+            </div>
+            <ul class="explains">
+                <li v-for="(item,index) in explainsList" :key="index">
+                    <span>{{item}}</span>
+                </li>  
+            </ul>
         </div>
     </div>
     
@@ -20,14 +31,24 @@ export default {
     data(){
         return {
             input:'',
-            item:{
+            item:{}
+        }
+    },
+    created(){
+        setTimeout(()=>{
+            this.item = {
                 level:1,//普通-简单
                 createTime: '2016-05-02',
-                name: 'honorificabilitudinitatibus',
+                name: 'apple',
                 usPhonetic:'æpl',
                 ukPhonetic:'æpl',
                 explains: 'n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。'
             }
+        },500);
+    },
+    computed:{
+        explainsList(){
+            return this.item.explains.split('；');
         }
     },
     methods:{
@@ -35,11 +56,40 @@ export default {
             if(this.input){
 
             }
+        },
+        onListenByUS(){
+            let audio = new Audio();
+            audio.src = '';
+            audio.play();
+        },
+        onListenByUK(){
+            let audio = new Audio();
+            audio.src = '';
+            audio.play();
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.flex-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    & > div{
+        width:100%;
+        padding:10px;
+    }
+    & > .phonetic{
+        span{
+            padding:0 20px;
+            cursor: pointer;
+        }
+    }
+    & > .explains li{
+        text-align: left;
+    }
+}
 </style>
