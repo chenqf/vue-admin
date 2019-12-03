@@ -48,19 +48,11 @@
 <script>
 import NoteItem from "../../components/NoteItem.vue";
 import NoteDialog from "../../components/NoteDialog.vue";
+import notes from '../../json/notes.json'
 export default {
     data(){
-        let list = [];
-        let len = 20;
-        while(len--){
-            list.push({
-                id:Math.random().toString(36).slice(2),
-                createTime:new Date().toString(),
-                content:Math.random() + ',' + Math.random()
-            })
-        }
         return {
-            list,
+            list:notes,
             dialogVisible:false,
             dialogId:'',
             dialogContent:'',

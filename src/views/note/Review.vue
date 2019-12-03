@@ -79,6 +79,7 @@
 import ReviewTab from "../../components/ReviewTab.vue";
 import NoteItem from "../../components/NoteItem.vue";
 import NoteDialog from "../../components/NoteDialog.vue";
+import notes from '../../json/notes.json'
 export default {
     data(){
         return {
@@ -96,22 +97,13 @@ export default {
     },
     created(){
         setTimeout(()=>{
-            let list = [];
-            let len = 20;
-            while(len--){
-                list.push({
-                    id:Math.random().toString(36).slice(2),
-                    createTime:new Date().toString(),
-                    content:Math.random() + ',' + Math.random()
-                })
-            }
-            this.dayAll = JSON.parse(JSON.stringify(list))
-            this.day1 = JSON.parse(JSON.stringify(list))
-            this.day2 = JSON.parse(JSON.stringify(list))
-            this.day4 = JSON.parse(JSON.stringify(list))
-            this.day7 = JSON.parse(JSON.stringify(list))
-            this.day15 = JSON.parse(JSON.stringify(list))
-            this.day30 = JSON.parse(JSON.stringify(list))
+            this.dayAll = JSON.parse(JSON.stringify(notes))
+            this.day1 = JSON.parse(JSON.stringify(notes))
+            this.day2 = JSON.parse(JSON.stringify(notes))
+            this.day4 = JSON.parse(JSON.stringify(notes))
+            this.day7 = JSON.parse(JSON.stringify(notes))
+            this.day15 = JSON.parse(JSON.stringify(notes))
+            this.day30 = JSON.parse(JSON.stringify(notes))
         },500);
     },
     components:{

@@ -47,6 +47,7 @@
 <script>
 import WordList from '../../components/WordList.vue'
 import WordDialog from '../../components/WordDialog.vue'
+import words from '../../json/words.json'
 export default {
   data() {
     return {
@@ -55,71 +56,7 @@ export default {
             
         },
         totalNum:0,
-        tableData: [
-            {
-            level: 1, //普通-简单
-            createTime: "2016-05-02",
-            name: "honorificabilitudinitatibus",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            },
-            {
-            level: 1, // 稍难
-            createTime: "2016-05-02",
-            name: "apple",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            },
-            {
-            level: 2, // 困难
-            createTime: "2016-05-02",
-            name: "apple",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            },
-            {
-            level: 3, // 稍难
-            createTime: "2016-05-02",
-            name: "apple",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            },
-            {
-            level: 3, // 稍难
-            createTime: "2016-05-02",
-            name: "apple",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            },
-            {
-            level: 3, // 稍难
-            createTime: "2016-05-02",
-            name: "apple",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            },
-            {
-            level: 2, // 稍难
-            createTime: "2016-05-02",
-            name: "apple",
-            usPhonetic: "æpl",
-            ukPhonetic: "æpl",
-            explains:
-                "n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。"
-            }
-        ],
+        tableData: words,
         //查询内容
         search: {
             startTime: "",
