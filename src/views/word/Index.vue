@@ -31,8 +31,16 @@
             style="width: 100%"
         >
             <el-table-column prop="name" label="单词" width="180" />
-            <el-table-column prop="usPhonetic" label="美音" width="120" />
-            <el-table-column prop="ukPhonetic" label="英音" width="120" />
+            <el-table-column label="英音" width="120" >
+                <template slot-scope="scope">
+                    <span class="audio-play" @click="onListenByUK(scope.row)">[{{scope.row.ukPhonetic}}]</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="美音" width="120" >
+                <template slot-scope="scope">
+                    <span class="audio-play" @click="onListenByUS(scope.row)">[{{scope.row.usPhonetic}}]</span>
+                </template>
+            </el-table-column>
 
             <el-table-column label="解释" >
                 <template slot-scope="scope">
@@ -74,6 +82,7 @@
 </template>
 
 <script>
+import {playUKWord, playUSWord} from '../../util/index.js'
 export default {
     data(){
         return {
@@ -193,6 +202,14 @@ export default {
         },
         handleCurrentChange(num){
             console.log(num)
+        },
+        //美音
+        onListenByUS(row){
+            playUSWord(row.name)
+        },
+        //英音
+        onListenByUK(row){
+            playUKWord(row.name)
         }
     },
     components:{
@@ -203,5 +220,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.audio-play{
+    cursor: pointer;
+}
 </style>
