@@ -29,6 +29,7 @@
     <!-- 单词表格 -->
     <WordList
        :data="tableData"
+       :useBlur="true"
        @edit-item="onEditWord"
        @delete-item="onDeleteWord"
        @change-level="changeLevel"
