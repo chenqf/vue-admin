@@ -113,7 +113,7 @@ export default {
             let pre = this.tabIndex;
             return http.post('/word/queryAll',{pre}).then(d=>{
                 let {data} = d;
-                this['day' + pre] = data;
+                this['day' + pre] = data.map(i=>{i.open = false; return i});;
             })
         },
         changeTab(name){

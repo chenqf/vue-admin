@@ -116,7 +116,7 @@ export default {
         content: this.search.value
       };
       http.post("/word/queryAll", params).then(({ data, count }) => {
-        this.tableData = data;
+        this.tableData = data.map(i=>{i.open = false; return i});
         this.totalNum = count;
       });
     },

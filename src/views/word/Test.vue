@@ -76,7 +76,7 @@ export default {
         params.level = this.search.level
       }
       http.post('/word/random',params).then(data=>{
-        this.tableData = data;
+        this.tableData = data.map(i=>{i.open = false; return i});;
       })
     },
     // 编辑框取消
