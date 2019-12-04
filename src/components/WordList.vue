@@ -138,13 +138,13 @@ export default {
             }
         },
         getExplains(row){
-            let explains = row.explains;
-            return explains
+            let explainsList = JSON.parse(row.explains);
+            return explainsList.join('<br>')
             // return explains.split("；").join("<br>");
         },
         getExplainsFomart(row){
-            let explains = row.explains;
-            return explains.split("；").join("<br>");
+            let explainsList = JSON.parse(row.explains);
+            return explainsList.join('<br>')
         },
         onEditWord(row){
             this.$emit('edit-item',row)

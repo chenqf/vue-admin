@@ -41,7 +41,11 @@ export default {
     },
     computed:{
         explainsList(){
-            return this.item.explains ? this.item.explains.split('；') : [];
+            if(this.item.explains){
+                return JSON.parse(this.item.explains)
+            }else{
+                return []
+            }
         }
     },
     methods:{
