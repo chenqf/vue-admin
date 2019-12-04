@@ -49,10 +49,12 @@
 import NoteItem from "../../components/NoteItem.vue";
 import NoteDialog from "../../components/NoteDialog.vue";
 import notes from '../../json/notes.json'
+import http from "../../libs/http.js";
 export default {
     data(){
         return {
-            list:notes,
+            list:[],
+            totalNum:0,
             dialogVisible:false,
             dialogId:'',
             dialogContent:'',
@@ -60,7 +62,9 @@ export default {
             search:{
                 startTime:'',
                 endTime:'',
-                value:''
+                value:'',
+                page:1,
+                pageCount:10
             },
             //日期快捷配置
             pickerOptions: {
@@ -94,10 +98,27 @@ export default {
             },
         }
     },
+    created() {
+        this.searchData();
+    },
     methods:{
+        searchData(){
+            let params = {
+                startNum: (this.search.page - 1) * this.search.pageCount,
+                pageCount: this.search.pageCount,
+                startTime: this.search.startTime,
+                endTime: this.search.endTime,
+                content: this.search.value
+            };
+            http.post("/note/queryAll", params).then(({ data, count }) => {
+                this.list = data;
+                this.totalNum = count;
+            });
+        },
         //根据搜索条件，查询笔记列表
-        onSearch(){
-            console.log(123)
+        onSearch() {
+            this.search.page = 1;
+            this.searchData();
         },
         //新增笔记
         onAdd(){
@@ -113,11 +134,26 @@ export default {
         },
         //取消弹窗
         dialogCancel(){
-             this.dialogVisible = false;
+            this.dialogVisible = false;
         },
         //确定弹窗
         dialogSubmit(list,id){
-            this.dialogVisible = false;
+            let data = list.filter(i=>!!i.value).map(i=>i.value);
+            if(!data.length){
+                return ;
+            }
+            //编辑
+            if(id){
+                http.post('/note/update',{id,content:JSON.stringify(data)}).then(item=>{
+                    this.dialogVisible = false;
+                })
+            }
+            //新建
+            else{
+                http.post('/note/create',{content:JSON.stringify(data)}).then(item=>{
+                    this.dialogVisible = false;
+                })
+            }
         },
     },
     components:{

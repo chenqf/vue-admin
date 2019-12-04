@@ -7,6 +7,14 @@
         :show-close="false"
     >
         <el-form :model="dynamic" label-width="80px">
+            <el-form-item label="创建时间">
+                <el-date-picker
+                    v-model="wordItem.createTime"
+                    align="right"
+                    type="date"
+                    placeholder="创建时间"
+                ></el-date-picker>
+            </el-form-item>
             <el-form-item :label="'笔记-' + (index + 1)" :key="index" v-for="(item,index) in dynamic.list">
                 <div class="flex">
                     <el-input class="flex1" type="textarea" v-model="item.value"></el-input>
@@ -34,19 +42,22 @@ export default {
     computed:{
         
     },
+    created(){
+        window.vm = this;
+    },
     data(){
         return {
-            dynamic:{list:[]}
+            dynamic:{list:[{value:''}]}
         }
     },
     watch:{
         content:function(val){
-            this.resize(val)
+            this.resize()
         }
     },
     methods:{
-        resize(val){
-            this.dynamic.list = this.content ? this.content.split(',').map(i=>({value:i})) : [{value:''}]
+        resize(){
+            this.dynamic.list = this.content ? JSON.parse(this.content).map(i=>({value:i})) : [{value:''}]
         },
         onDelLabel(index){
             this.dynamic.list.splice(index,1)
@@ -62,6 +73,7 @@ export default {
         //确定弹窗
         dialogSubmit(){
             this.$emit('note-dialog-submit',this.dynamic.list,this.id)
+            this.resize();
         },
     }
 }
