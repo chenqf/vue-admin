@@ -48,14 +48,14 @@
 <script>
 import WordList from '../../components/WordList.vue'
 import WordDialog from '../../components/WordDialog.vue'
-import words from '../../json/words.json'
+import http from "../../libs/http.js";
 export default {
   data() {
     return {
         dialogVisible:false,
         wordItem:{
         },
-        tableData: words,
+        tableData: [],
         //查询内容
         search: {
             level:0,
@@ -63,47 +63,71 @@ export default {
         }
     };
   },
+  created(){
+    this.onSearch();
+  },
   methods: {
-    //TODO 根据搜索条件，查询笔记列表
+    //根据搜索条件，查询笔记列表
     onSearch() {
-      console.log(this.search)
+      let params = {
+        pageCount:this.search.pageCount
+      }
+      if(this.search.level){
+        params.level = this.search.level
+      }
+      http.post('/word/random',params).then(data=>{
+        this.tableData = data;
+      })
     },
-    // TODO 编辑框取消
+    // 编辑框取消
     dialogCancel(){
         this.dialogVisible = false;
     },
-    // TODO 编辑框确定
-    dialogSubmit(){
+    //编辑框确定
+    dialogSubmit(item){
+      http.post('/word/update',item).then(()=>{
+        this.wordItem.name = item.name;
+        this.wordItem.createTime = item.createTime;
+        this.wordItem.explains = item.explains;
+        this.wordItem.level = item.level;
+        this.wordItem.phonetic = item.phonetic;
+        this.wordItem.ukPhonetic = item.ukPhonetic;
+        this.wordItem.usPhonetic = item.usPhonetic;
         this.dialogVisible = false;
+      })
     },
-    //TODO 变更难易度
-    changeLevel(a, b) {
-      console.log(a);
+    //变更难易度
+    changeLevel({ id, level }) {
+      http.post("/word/updateLevel", { id, level });
     },
-    //TODO 编辑
+    //编辑
     onEditWord(row) {
       this.dialogVisible = true;
       this.wordItem = row;
     },
-    //TODO 删除
+    //删除
     onDeleteWord(row) {
-        this.$confirm(`确认删除单词 [ ${row.name} ] 么？`, "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-        })
-        .then(() => {
+      this.$confirm(`确认删除单词 [ ${row.name} ] 么？`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+      .then(() => {
+        http.post("/word/delete", { id: row.id }).then(() => {
+          let item = this.tableData.filter(i=>i.id === row.id)[0];
+          this.tableData.splice(this.tableData.indexOf(item),1)
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
         });
+      })
+      .catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消删除"
+        });
+      });
     }
   },
   components: {

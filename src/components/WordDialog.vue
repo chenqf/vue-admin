@@ -6,9 +6,12 @@
         :visible.sync="visible"
         :show-close="false"
     >
-        <el-form :model="wordItem" label-width="80px">
+        <el-form :model="wordItem" label-width="100px">
             <el-form-item label="单词">
                 <el-input v-model="wordItem.name"></el-input>
+            </el-form-item>
+            <el-form-item label="国音">
+                <el-input v-model="wordItem.ukPhonetic"></el-input>
             </el-form-item>
             <el-form-item label="英音">
                 <el-input v-model="wordItem.ukPhonetic"></el-input>
@@ -20,7 +23,12 @@
                 <el-input type="textarea" v-model="wordItem.explains"></el-input>
             </el-form-item>
             <el-form-item label="创建时间">
-                <el-input v-model="wordItem.createTime"></el-input>
+                <el-date-picker
+                    v-model="wordItem.createTime"
+                    align="right"
+                    type="date"
+                    placeholder="创建时间"
+                ></el-date-picker>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">

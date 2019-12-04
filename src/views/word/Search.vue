@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import {playUKWord, playUSWord} from '../../util/index.js'
+import {playUKWord, playUSWord} from '../../libs/util.js'
+import http from '../../libs/http.js'
 export default {
     data(){
         return {
@@ -46,14 +47,9 @@ export default {
     methods:{
         searchWord(){
             if(this.input){
-                this.item = {
-                    level:1,//普通-简单
-                    createTime: '2016-05-02',
-                    name: 'apple',
-                    usPhonetic:'æpl',
-                    ukPhonetic:'æpl',
-                    explains: 'n. 苹果，苹果树，苹果似的东西；[美俚]炸弹，手榴弹，（棒球的）球；[美俚]人，家伙。'
-                }
+                http.post('/word/search',{q:this.input}).then(data=>{
+                    this.item = data;
+                })
             }
         },
         //美音

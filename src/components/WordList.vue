@@ -100,8 +100,8 @@
                 style="margin-top:20px;"
                 @current-change="handleCurrentChange"
                 layout="total, prev, pager, next"
-                :current-page="1"
-                :page-size="20"
+                :current-page="currentPage"
+                :page-size="pageSize"
                 :total="totalNum"
             />
         </template>
@@ -109,9 +109,9 @@
 </template>
 
 <script>
-import { playUKWord, playUSWord } from "../util/index.js";
+import { playUKWord, playUSWord } from "../libs/util.js";
 export default {
-    props:['data','pagination','totalNum','useBlur'],
+    props:['data','pagination','totalNum','useBlur','currentPage','pageSize'],
     data(){
         window.vm = this;
         return {

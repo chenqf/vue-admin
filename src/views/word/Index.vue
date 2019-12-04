@@ -13,7 +13,13 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间">
-          <el-input v-model="search.endTime" placeholder="结束时间"></el-input>
+          <el-date-picker
+            v-model="search.endTime"
+            align="right"
+            type="date"
+            placeholder="结束时间"
+            :picker-options="pickerOptions"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="内容">
           <el-input v-model="search.value" placeholder="内容"></el-input>
@@ -26,120 +32,146 @@
 
     <!-- 单词表格 -->
     <WordList
-       :data="tableData"
-       :pagination="true"
-       :totalNum="totalNum"
-       @edit-item="onEditWord"
-       @delete-item="onDeleteWord"
-       @change-level="changeLevel"
-       @change-page="handleCurrentChange"
+      :data="tableData"
+      :pagination="true"
+      :totalNum="totalNum"
+      :currentPage="search.page"
+      :page-size="search.pageCount"
+      @edit-item="onEditWord"
+      @delete-item="onDeleteWord"
+      @change-level="changeLevel"
+      @change-page="handleCurrentChange"
     />
 
     <WordDialog
-       :item="wordItem"
-       :visible="dialogVisible"
-       @word-dialog-cancel="dialogCancel"
-       @word-dialog-submit="dialogSubmit"
+      :item="wordItem"
+      :visible="dialogVisible"
+      @word-dialog-cancel="dialogCancel"
+      @word-dialog-submit="dialogSubmit"
     />
   </div>
 </template>
 
 <script>
-import WordList from '../../components/WordList.vue'
-import WordDialog from '../../components/WordDialog.vue'
-import words from '../../json/words.json'
+import WordList from "../../components/WordList.vue";
+import WordDialog from "../../components/WordDialog.vue";
+import http from "../../libs/http.js";
 export default {
   data() {
     return {
-        dialogVisible:false,
-        wordItem:{
-            
+      dialogVisible: false,
+      wordItem: {},
+      totalNum: 0,
+      tableData: [],
+      //查询内容
+      search: {
+        startTime: "",
+        endTime: "",
+        value: "",
+        page: 1,
+        pageCount: 10
+      },
+      //日期快捷配置
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
         },
-        totalNum:0,
-        tableData: words,
-        //查询内容
-        search: {
-            startTime: "",
-            endTime: "",
-            value: ""
-        },
-        //日期快捷配置
-        pickerOptions: {
-            disabledDate(time) {
-            return time.getTime() > Date.now();
-            },
-            shortcuts: [
-            {
-                text: "今天",
-                onClick(picker) {
-                picker.$emit("pick", new Date());
-                }
-            },
-            {
-                text: "昨天",
-                onClick(picker) {
-                const date = new Date();
-                date.setTime(date.getTime() - 3600 * 1000 * 24);
-                picker.$emit("pick", date);
-                }
-            },
-            {
-                text: "一周前",
-                onClick(picker) {
-                const date = new Date();
-                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-                picker.$emit("pick", date);
-                }
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
             }
-            ]
-        }
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
+          }
+        ]
+      }
     };
   },
+  created() {
+    this.searchData();
+  },
   methods: {
-    //TODO 根据搜索条件，查询笔记列表
+    searchData(){
+      let params = {
+        startNum: (this.search.page - 1) * this.search.pageCount,
+        pageCount: this.search.pageCount,
+        startTime: this.search.startTime,
+        endTime: this.search.endTime,
+        content: this.search.value
+      };
+      http.post("/word/queryAll", params).then(({ data, count }) => {
+        this.tableData = data;
+        this.totalNum = count;
+      });
+    },
+    //根据搜索条件，查询笔记列表
     onSearch() {
-      console.log(123);
+      this.search.page = 1;
+      this.searchData();
     },
-    //TODO 变更难易度
-    changeLevel(a, b) {
-      console.log(a);
+    //变更难易度
+    changeLevel({ id, level }) {
+      http.post("/word/updateLevel", { id, level });
     },
-    //TODO 编辑
+    //编辑
     onEditWord(row) {
       this.dialogVisible = true;
       this.wordItem = row;
     },
-    // TODO 编辑框取消
-    dialogCancel(){
-        this.dialogVisible = false;
+    //编辑框取消
+    dialogCancel() {
+      this.dialogVisible = false;
     },
-    // TODO 编辑框确定
-    dialogSubmit(){
+    //编辑框确定
+    dialogSubmit(item) {
+      http.post('/word/update',item).then(()=>{
+        this.searchData();
         this.dialogVisible = false;
+      })
     },
-    //TODO 删除
+    //删除
     onDeleteWord(row) {
-        this.$confirm(`确认删除单词 [ ${row.name} ] 么？`, "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-        })
-        .then(() => {
+      this.$confirm(`确认删除单词 [ ${row.name} ] 么？`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+      .then(() => {
+        http.post("/word/delete", { id: row.id }).then(() => {
+          this.searchData();
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
         });
+      })
+      .catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消删除"
+        });
+      });
     },
-    //TODO 分页
+    //分页
     handleCurrentChange(num) {
-      console.log(num);
+      this.search.page = num;
+      this.searchData();
     }
   },
   components: {
@@ -150,5 +182,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
