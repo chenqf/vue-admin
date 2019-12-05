@@ -21,6 +21,12 @@
             :picker-options="pickerOptions"
           ></el-date-picker>
         </el-form-item>
+        <el-form-item label="排序方式">
+            <el-select v-model="search.order" placeholder="请选择排序方式">
+                <el-option label="时间倒序" value="DESC"></el-option>
+                <el-option label="时间逆序" value="ASC"></el-option>
+            </el-select>
+        </el-form-item>
         <el-form-item label="内容">
           <el-input v-model="search.value" placeholder="内容"></el-input>
         </el-form-item>
@@ -68,6 +74,7 @@ export default {
         startTime: "",
         endTime: "",
         value: "",
+        order:'DESC',
         page: 1,
         pageCount: 10
       },
@@ -113,7 +120,8 @@ export default {
         pageCount: this.search.pageCount,
         startTime: this.search.startTime,
         endTime: this.search.endTime,
-        content: this.search.value
+        content: this.search.value,
+        order:this.search.order
       };
       http.post("/word/queryAll", params).then(({ data, count }) => {
         this.tableData = data.map(i=>{i.open = false; return i});
