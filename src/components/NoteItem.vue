@@ -2,7 +2,8 @@
     <el-card style="margin-bottom:20px;">
         <div slot="header" class="clearfix">
             <span v-html="title"></span>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="onEdit(item)">修改</el-button>
+            <el-button style="float: right; padding: 3px 0;margin-left:10px;" type="text" @click="onEdit(item)">修改</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="onDelete(item)">删除</el-button>
         </div>
         <div v-for="(i,index) in list" :key="index" class="text-item">
             {{i}}
@@ -27,6 +28,9 @@ export default {
     methods:{
         onEdit(item){
             this.$emit('edit-item',item)
+        },
+        onDelete(item){
+            this.$emit('delete-item',item)
         }
     }
 }

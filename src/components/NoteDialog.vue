@@ -7,9 +7,9 @@
         :show-close="false"
     >
         <el-form :model="dynamic" label-width="80px">
-            <el-form-item label="创建时间">
+            <el-form-item label="创建时间" v-if="id">
                 <el-date-picker
-                    v-model="wordItem.createTime"
+                    v-model="createTime"
                     align="right"
                     type="date"
                     placeholder="创建时间"
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-    props:['id','visible','content'],
+    props:['id','visible','content','time'],
     computed:{
         
     },
@@ -47,17 +47,28 @@ export default {
     },
     data(){
         return {
-            dynamic:{list:[{value:''}]}
+            dynamic:{list:[{value:''}]},
+            createTime:''
         }
     },
     watch:{
         content:function(val){
-            this.resize()
+            this.resizeList()
+        },
+        time:function(val){
+            this.resizeTime();
         }
     },
     methods:{
-        resize(){
+        resizeList(){
             this.dynamic.list = this.content ? JSON.parse(this.content).map(i=>({value:i})) : [{value:''}]
+        },
+        resizeTime(){
+            this.createTime = this.time || '';
+        },
+        resize(){
+            this.resizeList();
+            this.resizeTime();
         },
         onDelLabel(index){
             this.dynamic.list.splice(index,1)
@@ -72,7 +83,11 @@ export default {
         },
         //确定弹窗
         dialogSubmit(){
-            this.$emit('note-dialog-submit',this.dynamic.list,this.id)
+            this.$emit('note-dialog-submit',{
+                list:this.dynamic.list,
+                id:this.id,
+                createTime:this.createTime
+            })
             this.resize();
         },
     }

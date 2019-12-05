@@ -13,11 +13,17 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="结束时间">
-                <el-input v-model="search.endTime" placeholder="结束时间"></el-input>
+                <el-date-picker
+                    v-model="search.endTime"
+                    align="right"
+                    type="date"
+                    placeholder="结束时间"
+                    :picker-options="pickerOptions">
+                </el-date-picker>
             </el-form-item>
-            <el-form-item label="内容">
+            <!-- <el-form-item label="内容">
                 <el-input v-model="search.value" placeholder="内容"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item style="margin-left:20px">
                  <el-button type="primary" @click="onSearch" round>查询</el-button>
             </el-form-item>
@@ -30,15 +36,26 @@
     <!-- 日期列表 -->
     <NoteItem  
         @edit-item="onEdit" 
+        @delete-item="onDelete"
         :item="item" 
         style="margin-bottom:20px;" 
         :key="item.id" 
         v-for="item in list"
     />
+    <el-pagination v-if="search.page > 1 || list.length"
+        background
+        style="margin-top:20px;"
+        @current-change="handleCurrentChange"
+        layout="total, prev, pager, next"
+        :current-page="search.page"
+        :page-size="search.pageCount"
+        :total="totalNum"
+    />
     <NoteDialog 
-        :visible="dialogVisible"
-        :id="dialogId"
-        :content="dialogContent"
+        :visible="dialog.visible"
+        :id="dialog.id"
+        :content="dialog.content"
+        :time="dialog.time"
         @note-dialog-cancel="dialogCancel" 
         @note-dialog-submit="dialogSubmit" 
     />
@@ -55,16 +72,19 @@ export default {
         return {
             list:[],
             totalNum:0,
-            dialogVisible:false,
-            dialogId:'',
-            dialogContent:'',
+            dialog:{
+                visible:false,
+                id:'',
+                content:'',
+                time:'',
+            },
             //查询内容
             search:{
                 startTime:'',
                 endTime:'',
                 value:'',
                 page:1,
-                pageCount:10
+                pageCount:3
             },
             //日期快捷配置
             pickerOptions: {
@@ -108,12 +128,16 @@ export default {
                 pageCount: this.search.pageCount,
                 startTime: this.search.startTime,
                 endTime: this.search.endTime,
-                content: this.search.value
+                // content: this.search.value
             };
             http.post("/note/queryAll", params).then(({ data, count }) => {
                 this.list = data;
                 this.totalNum = count;
             });
+        },
+        handleCurrentChange(page){
+            this.search.page = page;
+            this.searchData();
         },
         //根据搜索条件，查询笔记列表
         onSearch() {
@@ -122,36 +146,63 @@ export default {
         },
         //新增笔记
         onAdd(){
-            this.dialogVisible = true;
-            this.dialogId = '';
-            this.dialogContent = '';
+            this.dialog.visible = true;
+            this.dialog.id = '';
+            this.dialog.content = '';
+            this.dialog.time = '';
         },
         //编辑笔记
         onEdit(item){
-            this.dialogVisible = true;
-            this.dialogId = item.id;
-            this.dialogContent = item.content;
+            this.dialog.visible = true;
+            this.dialog.id = item.id;
+            this.dialog.content = item.content;
+            this.dialog.time = item.createTime;
+        },
+        //删除笔记
+        onDelete(item){
+            this.$confirm(`确认删除单词该笔记么？`, "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            })
+            .then(() => {
+                http.post("/note/delete", { id: item.id }).then(() => {
+                    this.searchData();
+                    this.$message({
+                        type: "success",
+                        message: "删除成功!"
+                    });
+                });
+            })
+            .catch(() => {
+                this.$message({
+                type: "info",
+                message: "已取消删除"
+                });
+            });
         },
         //取消弹窗
         dialogCancel(){
-            this.dialogVisible = false;
+            this.dialog.visible = false;
         },
         //确定弹窗
-        dialogSubmit(list,id){
+        dialogSubmit({list,createTime,id}){
             let data = list.filter(i=>!!i.value).map(i=>i.value);
             if(!data.length){
                 return ;
             }
             //编辑
             if(id){
-                http.post('/note/update',{id,content:JSON.stringify(data)}).then(item=>{
-                    this.dialogVisible = false;
+                http.post('/note/update',{id,content:JSON.stringify(data),createTime}).then(item=>{
+                    this.searchData();
+                    this.dialog.visible = false;
                 })
             }
             //新建
             else{
                 http.post('/note/create',{content:JSON.stringify(data)}).then(item=>{
-                    this.dialogVisible = false;
+                    this.onSearch();
+                    this.dialog.visible = false;
                 })
             }
         },
