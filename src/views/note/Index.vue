@@ -71,7 +71,6 @@
 <script>
 import NoteItem from "../../components/NoteItem.vue";
 import NoteDialog from "../../components/NoteDialog.vue";
-import notes from '../../json/notes.json'
 import http from "../../libs/http.js";
 export default {
     data(){

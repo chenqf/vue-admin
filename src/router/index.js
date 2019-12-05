@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import NotFound from '../views/404.vue'
 
+//白名单
+
 Vue.use(VueRouter)
 
 const routes = [
