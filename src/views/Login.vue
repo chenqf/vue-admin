@@ -1,28 +1,31 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" v-on:keyup.enter="onSubmit">
     <div class="login-form">
-      <el-form ref="form" :model="form" label-width="80px">
+      <div class="login-head">
+        <span>欢迎登陆</span>
+      </div>
+      <el-form ref="form" :model="form" class="login-body">
         <el-form-item 
-          label="用户名"
           prop="name"
           :rules="[
             { required: true, message: '用户名不能为空'}
           ]"
         >
-          <el-input v-model="form.name"/>
+          <el-input placeholder="请输入用户名" v-model="form.name">
+            <template slot="prepend" style="padding: 0 10px;"><i class="el-icon-user-solid"></i></template>
+          </el-input>
         </el-form-item>
         <el-form-item 
-          label="密码"
           prop="password"
           :rules="[
             { required: true, message: '密码不能为空'}
           ]"
         >
-          <el-input v-model="form.password"></el-input>
+          <el-input placeholder="请输入密码" type="password" v-model="form.password">
+            <template slot="prepend"><i class="el-icon-lock"></i></template>
+          </el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">登&nbsp;&nbsp;录</el-button>
-        </el-form-item>
+        <el-button type="primary"  style='width:100%;margin-top:10px' @click="onSubmit">登&nbsp;&nbsp;录</el-button>
       </el-form>
     </div>
   </div>
@@ -62,15 +65,49 @@ export default {
 <style lang="scss">
 .login-container {
   height: 100%;
+  width:100%;
+  background-image: url(../assets/login-bg.jpg);
+  background-size: cover;
+  background-position: 50%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   .login-form {
+    width: 350px;
+    background: #fff;
     position: relative;
+    font-size: 14px;
+    transition: all .2s ease-in-out;
     top:-20px;
-    padding: 40px 30px 20px 30px;
-    border: 1px solid #999;
-    border-radius: 3px;
+    right:10%;
+    border-radius: 4px;
+    .login-head{
+      border-bottom: 1px solid #e8eaec;
+      padding: 14px 16px;
+      line-height: 1;
+      span{
+        line-height: 20px;
+        font-size: 16px;
+        color: #17233d;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .login-body{
+      padding: 20px 20px 30px 20px;
+      .el-input-group__prepend{
+        padding:0 10px;
+      }
+    }
+    .is-error{
+      .el-input-group__prepend{
+        padding:0 10px;
+        border-color: #F56C6C;
+      }
+    }
+    
   }
 }
 </style>
