@@ -29,12 +29,12 @@
 </template>
 
 <script>
-import http from "../libs/http.js";
+import {login} from '../api/user.js'
 export default {
   data(){
     return {
       form:{
-        name:'',
+        name:'', 
         password:''
       }
     }
@@ -43,8 +43,10 @@ export default {
     onSubmit(){
       this.$refs.form.validate((valid) => {
         if (valid) {
-            http.post('/user/login',this.form).then(()=>{
-              this.$router.replace({name:'home'})
+            login(this.form).then((data)=>{
+              if(data.id){
+                // this.$router.replace({name:'home'})
+              }
             }).catch(()=>{
               this.$message.error('用户名或密码错误');
             })

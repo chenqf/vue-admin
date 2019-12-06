@@ -2,10 +2,14 @@
 
 admin-cli
 
+https://admin.iviewui.com/login  登录页UI参考
+
 
 iview-admin https://lison16.github.io/iview-admin-doc/#/
 
 request 实现 next
+
+相对路径问题
 
 命名视图，实现首页布局
 
