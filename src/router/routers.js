@@ -49,7 +49,10 @@ export default [
       name: 'tag',
       component: Main,
       meta: {
-        hideInBread: true
+        hideInBread: true,
+        showAlways:true,
+        icon: '_qq',
+        title: '总显示'
       },
       children: [
         {

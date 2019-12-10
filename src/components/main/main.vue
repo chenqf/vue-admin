@@ -1,103 +1,169 @@
 <template>
+  <el-container>
+
+    <!-- 左侧 -->
+    <el-aside class="left-aside">
+      <div class="aside-logo">Logo</div>
+      <aside-menu :collapsed="collapsed" :menu-list="menuList" />
+    </el-aside>
+
+    <!-- 右侧 -->
     <el-container>
-        <el-aside>
-            <div class="aside-logo">
-                Logo
-            </div>
-            <el-menu
-                text-color="#fff"
-                active-text-color="#ffd04b"
-            >
-                <el-submenu index="1">
-                    <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>导航一</span>
-                    </template>
-                    <el-menu-item-group>
-                    <template slot="title">分组一</template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                    </el-menu-item-group>
-                    <el-submenu index="1-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="1-4-1">选项1</el-menu-item>
-                    </el-submenu>
-                </el-submenu>
-                <el-menu-item index="2">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">导航二</span>
-                </el-menu-item>
-                <el-menu-item index="3" disabled>
-                    <i class="el-icon-document"></i>
-                    <span slot="title">导航三</span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">导航四</span>
-                </el-menu-item>
-            </el-menu>
-        </el-aside>
-        <el-container>
-            <el-header>Header</el-header>
-            <el-main>
-                <router-view/>
-            </el-main>
-            <el-footer>Footer</el-footer>
-        </el-container>
+
+      <!-- 头部 -->
+      <el-header>
+        <i
+          class="el-icon-s-fold menu-control"
+          :class="{'is-collapsed':collapsed}"
+          @click="collapsed = !collapsed"
+        />
+        <i class="el-icon-full-screen" style="font-size:23px;" />
+      </el-header>
+
+      <!-- 内容区 -->
+      <el-main>
+        <router-view />
+      </el-main>
+
+      <!-- 底部 -->
+      <el-footer>Footer</el-footer>
+
     </el-container>
+  </el-container>
 </template>
 
 <script>
+import asideMenu from "./aside-menu.vue";
+
 export default {
-    data(){
-        return {
-            collapsed:false // 是否最小化左侧菜单
-        }
-    },
-    methods:{
-        handleCollapsedChange (state) {
-            this.collapsed = state
-        },
+  data() {
+    return {
+      collapsed: false // 是否最小化左侧菜单
+    };
+  },
+
+  computed: {
+    menuList() {
+      return this.$store.getters.menuList;
     }
-}
+  },
+  methods: {},
+  components: {
+    asideMenu
+  }
+};
 </script>
 
 
-<style lang="scss" scoped>
-$aside-bg-color:#001529;
-$aside-color:rgba(255, 255, 255, 0.7);
-$aside-open-width:260px;
-$aside-close-width:65px;
-$header-height:64px;
+<style lang="scss">
+$aside-bg-color: #001529;
+$aside-color: rgba(255, 255, 255, 0.7);
+$aside-open-width: 260px;
+$header-height: 64px;
+$icon-color: #5c6b77;
+$icon-hover-color: #57a3f3;
 
+.el-container {
+  height: 100%;
+  & > .el-aside.left-aside {
+    background-color: $aside-bg-color;
+    color: $aside-color;
+    width: auto !important;
+    transition: width 0.1s;
 
-.el-container{
-    height: 100%;
-    & > .el-aside{
-        background-color: $aside-bg-color;
-        color:$aside-color;
-        width: $aside-open-width!important;
-        &.close{
-            width:$aside-close-width!important;
-        }
-        & > .aside-logo{
-            height: $header-height;
-        }
-        & > .el-menu{
+    & > .aside-logo {
+      height: $header-height;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .el-menu {
+      background-color: $aside-bg-color;
+      border-right: 1px solid $aside-bg-color;
+      &:not(.el-menu--collapse) {
+        width: $aside-open-width;
+        // 子菜单
+        & > .el-menu-item {
+          color: $aside-color;
+          // 子菜单被选中
+          &.is-active {
+            background: #2d8cf0 !important;
+            color: #fff !important;
+            & > i {
+              color: #fff;
+            }
+          }
+          // 子菜单鼠标悬浮
+          &:hover {
             background-color: $aside-bg-color;
+            color: #fff;
+            & > i {
+              color: #fff;
+            }
+          }
         }
-    }
 
-    & > .el-header{
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #F0F0F0;
-        height: $header-height!important;
+        // 父菜单
+        & > .el-submenu {
+          // 父菜单标题
+          & > .el-submenu__title {
+            color: $aside-color;
+            & > i {
+              color: $aside-color;
+            }
+          }
+          // 父菜单鼠标悬浮
+          & > .el-submenu__title:hover {
+            background-color: $aside-bg-color;
+            color: #fff;
+            & > i {
+              color: #fff;
+            }
+          }
+          // 父菜单中有被选中
+          &.is-active {
+            & > .el-submenu__title {
+              background-color: $aside-bg-color;
+              color: #fff;
+              & > i {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+      // 最小化
+      &.el-menu--collapse {
+        & > li > .el-submenu__title > i {
+          color: #fff;
+        }
+        & > li > .el-tooltip > i {
+          color: #fff;
+        }
+      }
     }
+  }
+
+  & > .el-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+    height: $header-height !important;
+    [class^="el-icon-"] {
+      color: $icon-color;
+      cursor: pointer;
+      &:hover {
+        color: $icon-hover-color;
+      }
+    }
+    .menu-control {
+      font-size: 28px;
+      transition: transform 0.2s;
+    }
+    .is-collapsed {
+      transform: rotate(180deg);
+    }
+  }
 }
-
-
 </style>
