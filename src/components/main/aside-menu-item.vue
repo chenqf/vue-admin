@@ -15,8 +15,8 @@
         <span slot="title">{{menu.meta.title}}</span>
       </el-menu-item>
   </div>
-      
-</div>
+</template>    
+
 
 <script>
 export default {
