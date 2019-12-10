@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {login} from '../api/user.js'
+import {login} from '@api/user.js'
 export default {
   data(){
     return {
@@ -66,7 +66,7 @@ export default {
 .login-container {
   height: 100%;
   width:100%;
-  background-image: url(../assets/login-bg.jpg);
+  background-image: url(../../assets/login-bg.jpg);
   background-size: cover;
   background-position: 50%;
   display: flex;

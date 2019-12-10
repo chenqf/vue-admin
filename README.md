@@ -9,8 +9,6 @@ iview-admin https://lison16.github.io/iview-admin-doc/#/
 
 request 实现 next
 
-相对路径问题
-
 命名视图，实现首页布局
 
 404 页面使用重定向来实现
@@ -25,6 +23,11 @@ meta 上添加title 关键字，用于修改浏览器title
 
 mock 相关内容
 
+自定义指令：拖拽 复制
+
+excl 的处理
+
+dev 下启用日志
 
 菜单 和 路由 二者数据不要一一对应，路由的层级可能层数较少，但菜单的层级确不一定
 

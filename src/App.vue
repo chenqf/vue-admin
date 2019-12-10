@@ -5,9 +5,8 @@
 </template>
 
 <script>
-import userApi from './api/user.js'
 export default {
-  
+  name:'App'
 }
 </script>
 
