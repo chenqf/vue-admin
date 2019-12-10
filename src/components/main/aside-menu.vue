@@ -6,29 +6,13 @@
     @select="selectMenu"
   >
     <template v-for="(menu,index) in menuList">
-      <!-- 父节点 -->
-      <el-submenu :index="menu.name" :key="index" v-if="showParent(menu)">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>{{menu.meta.title}}</span>
-        </template>
-        <el-menu-item :index="item.name" v-for="(item,i) in menu.children" :key="i">
-          <i class="el-icon-menu"></i>
-          <span slot="title">{{item.meta.title}}</span>
-        </el-menu-item>
-      </el-submenu>
-
-      <!-- 直接节点 -->
-      <el-menu-item :index="menu.name" :key="index" v-if="!showParent(menu)" >
-        <i class="el-icon-menu"></i>
-        <span slot="title">{{menu.meta.title}}</span>
-      </el-menu-item>
+      <aside-menu-item :key="index" :menu="menu"></aside-menu-item>
     </template>
   </el-menu>
 </template>
 
 <script>
-// import asideMenuItem from './aside-menu-item.vue';
+import asideMenuItem from './aside-menu-item.vue';
 export default {
   name: "asideMenu",
   props: {
@@ -48,7 +32,7 @@ export default {
     return {name:''}
   },
   components:{
-    // asideMenuItem
+    asideMenuItem
   },
   methods:{
     showParent(menu){

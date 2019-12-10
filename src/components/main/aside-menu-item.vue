@@ -1,27 +1,22 @@
 <template>
   <div>
       <!-- 父节点 -->
-      <el-submenu :index="menu.name" :key="index" v-if="showParent(menu)">
+      <el-submenu :index="menu.name" v-if="showParent(menu)">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>{{menu.meta.title}}</span>
         </template>
-        <aside-menu-item 
-          :menu="item"
-          v-for="(item,i) in menu.children" 
-          v-if="showParent(item)"
-          :key="i"
-        ></aside-menu-item>
+        <aside-menu-item :menu="item" v-for="(item,i) in menu.children" :key="i"></aside-menu-item>
       </el-submenu>
 
       <!-- 直接节点 -->
-      <el-menu-item :index="menu.name" :key="index" v-if="!showParent(menu)" >
+      <el-menu-item :index="menu.name" v-if="!showParent(menu)" >
         <i class="el-icon-menu"></i>
         <span slot="title">{{menu.meta.title}}</span>
       </el-menu-item>
   </div>
       
-</template>
+</div>
 
 <script>
 export default {
