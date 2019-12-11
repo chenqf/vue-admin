@@ -1,0 +1,5 @@
+<template>
+    <keep-alive>
+        <router-view ref="child"/>
+    </keep-alive>
+</template>

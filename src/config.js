@@ -11,7 +11,8 @@ export default {
         TIMEOUT:DEV ? 3000:3000
     },
     ROUTER:{
-        HOME_NAME:'',
+        HOME_NAME:'home',
         LOGIN_NAME:'login'
-    }
+    },
+    TOKEN_KEY:'token'
 }

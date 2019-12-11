@@ -1,19 +1,30 @@
 <template>
     <div>
       <template v-for="(menu,index) in menuList">
-        <el-submenu :key="index" :index="menu.name" v-if="showParent(menu)">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>{{menu.meta.title}}</span>
-          </template>
-          <aside-menu-list :menu-list="menu.children"></aside-menu-list>
-        </el-submenu>
-        <el-menu-item v-else :key="index" :index="menu.name" >
-          <i class="el-icon-menu"></i>
-          <span slot="title">{{menu.meta.title}}</span>
-        </el-menu-item>
+        <!-- 父节点 -->
+        <template v-if="isParent(menu)">
+          <el-submenu :key="index" :index="menu.name">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>{{menu.meta.title}}</span>
+            </template>
+            <!-- 递归调用 -->
+            <aside-menu-list :menu-list="menu.children"></aside-menu-list>
+          </el-submenu>
+        </template>
+        <template v-else-if="isSingleChild(menu)">
+          <el-menu-item :key="index" :index="menu.children[0].name" >
+            <i class="el-icon-menu"></i>
+            <span slot="title">{{menu.children[0].meta.title}}</span>
+          </el-menu-item>
+        </template>
+        <template v-else>
+          <el-menu-item :key="index" :index="menu.name" >
+            <i class="el-icon-menu"></i>
+            <span slot="title">{{menu.meta.title}}</span>
+          </el-menu-item>
+        </template>
       </template>
-      
   </div>
 </template>    
 
@@ -28,7 +39,13 @@ export default {
     }
   },
   methods:{
-    showParent(menu){
+    isSingleChild(menu){
+      let {
+        children = []
+      } = menu;
+      return !!children.length
+    },
+    isParent(menu){
       let {
         meta = {},
         children = []

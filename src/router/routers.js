@@ -1,4 +1,5 @@
-import Main from '_c/main/main.vue'
+import Main from '_c/main'
+import ParentView from '_c/parent-view';
 import config from '@/config';
 
 const {
@@ -6,6 +7,21 @@ const {
   LOGIN_NAME
 } = config.ROUTER;
 
+
+
+/**
+ * name/path：router跳转时需要用到的name和path
+ * component：用到的页面组件
+ * meta
+ *    title：标题（浏览器顶部标题，面包屑标题、菜单标题）
+ *    hideInMenu：(default: false)是否在菜单中显示
+ *    showAlways：(default: false)只有一个子路由时，是否显示父路由 TODO
+ *    icon：图标（面包屑图标、菜单图标）TODO
+ *    hideInBread：是否在面包屑中显示 TODO
+ *    notCache：(default: false)是否启用keep-alive TODO
+ *    href：用于外部跳转的链接    TODO
+
+ */
 export default [
     {
       path: '/login',
@@ -56,7 +72,7 @@ export default [
       component: Main,
       meta: {
         hideInBread: true,
-        showAlways:true,
+        // showAlways:true,
         icon: '_qq',
         title: '总显示'
       },
@@ -107,7 +123,7 @@ export default [
             icon: 'logo-buffer',
             title: '更多'
           },
-          component: Main,
+          component: ParentView,
           children: [
             {
               path: 'all',
