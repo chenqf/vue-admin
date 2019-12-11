@@ -4,7 +4,8 @@ import config from '@/config';
 
 const {
   HOME_NAME,
-  LOGIN_NAME
+  LOGIN_NAME,
+  NOTFOUND_NAME
 } = config.ROUTER;
 
 
@@ -20,7 +21,7 @@ const {
  *    hideInBread：是否在面包屑中显示 TODO
  *    notCache：(default: false)是否启用keep-alive TODO
  *    href：用于外部跳转的链接    TODO
-
+ *    notAuth：(default:false) 是否需要登录，默认都需要登录 TODO 1
  */
 export default [
     {
@@ -28,6 +29,7 @@ export default [
       name: LOGIN_NAME,
       meta: {
         title: 'Login - 登录',
+        notAuth:true,
         hideInBread:true, // 面包屑中不显示
         hideInMenu: true // 左侧菜单不显示
       },
@@ -39,6 +41,7 @@ export default [
       redirect: '/home',
       component: Main,
       meta: {
+        notAuth:true,
         hideInBread:true, // 面包屑中不显示
         hideInMenu: true // 左侧菜单不显示
       },
@@ -164,8 +167,8 @@ export default [
       component: () => import('@/view/error-page/500.vue')
     },
     {
-      path: '*',
-      name: 'error_404',
+      path: '/404',
+      name: NOTFOUND_NAME,
       meta: {
         hideInMenu: true
       },

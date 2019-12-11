@@ -10,7 +10,8 @@ import {
 
 const {
   HOME_NAME,
-  LOGIN_NAME
+  LOGIN_NAME,
+  NOTFOUND_NAME
 } = config.ROUTER;
 
 
@@ -22,7 +23,13 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes:[
+    ...routes,
+    {
+      path: '*',
+      redirect: { name: NOTFOUND_NAME }
+    }
+  ]
 })
 
 

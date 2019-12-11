@@ -12,7 +12,8 @@ export default {
     },
     ROUTER:{
         HOME_NAME:'home',
-        LOGIN_NAME:'login'
+        LOGIN_NAME:'login',
+        NOTFOUND_NAME:'error_404',
     },
     TOKEN_KEY:'token'
 }

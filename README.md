@@ -2,9 +2,6 @@
 
 admin-cli
 
-https://admin.iviewui.com/login  登录页UI参考
-
-
 iview-admin https://lison16.github.io/iview-admin-doc/#/
 
 request 实现 next
