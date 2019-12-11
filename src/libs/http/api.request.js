@@ -1,9 +1,7 @@
 import HttpRequest from './http.request.js'
 import config from '../../config.js'
 
-const ENV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PRODUCT';
-
-const HTTP_SETTING = config.HTTP[ENV];
+const HTTP_SETTING = config.HTTP;
 
 const BASE_URL = HTTP_SETTING.PROTOCOL + '//' + HTTP_SETTING.HOSTNAME + (HTTP_SETTING.PORT ? `:${HTTP_SETTING.PORT}`:'')
 

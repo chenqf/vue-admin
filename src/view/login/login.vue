@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {login} from '@api/user.js'
+import {login} from '@/api/user.js'
 export default {
   data(){
     return {

@@ -58,7 +58,6 @@ export default {
 <style lang="scss">
 $aside-bg-color: #001529;
 $aside-color: rgba(255, 255, 255, 0.7);
-$aside-open-width: 260px;
 $header-height: 64px;
 $icon-color: #5c6b77;
 $icon-hover-color: #57a3f3;
@@ -76,71 +75,6 @@ $icon-hover-color: #57a3f3;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-    .el-menu {
-      background-color: $aside-bg-color;
-      border-right: 1px solid $aside-bg-color;
-      &:not(.el-menu--collapse) {
-        width: $aside-open-width;
-        // 子菜单
-        & > .el-menu-item {
-          color: $aside-color;
-          // 子菜单被选中
-          &.is-active {
-            background: #2d8cf0 !important;
-            color: #fff !important;
-            & > i {
-              color: #fff;
-            }
-          }
-          // 子菜单鼠标悬浮
-          &:hover {
-            background-color: $aside-bg-color;
-            color: #fff;
-            & > i {
-              color: #fff;
-            }
-          }
-        }
-
-        // 父菜单
-        & > .el-submenu {
-          // 父菜单标题
-          & > .el-submenu__title {
-            color: $aside-color;
-            & > i {
-              color: $aside-color;
-            }
-          }
-          // 父菜单鼠标悬浮
-          & > .el-submenu__title:hover {
-            background-color: $aside-bg-color;
-            color: #fff;
-            & > i {
-              color: #fff;
-            }
-          }
-          // 父菜单中有被选中
-          &.is-active {
-            & > .el-submenu__title {
-              background-color: $aside-bg-color;
-              color: #fff;
-              & > i {
-                color: #fff;
-              }
-            }
-          }
-        }
-      }
-      // 最小化
-      &.el-menu--collapse {
-        & > li > .el-submenu__title > i {
-          color: #fff;
-        }
-        & > li > .el-tooltip > i {
-          color: #fff;
-        }
-      }
     }
   }
 

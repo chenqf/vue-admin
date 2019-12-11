@@ -1,15 +1,21 @@
-import Main from '@components/main/main.vue'
+import Main from '_c/main/main.vue'
+import config from '@/config';
+
+const {
+  HOME_NAME,
+  LOGIN_NAME
+} = config.ROUTER;
 
 export default [
     {
       path: '/login',
-      name: 'login',
+      name: LOGIN_NAME,
       meta: {
         title: 'Login - 登录',
         hideInBread:true, // 面包屑中不显示
         hideInMenu: true // 左侧菜单不显示
       },
-      component: () => import('@view/login/login.vue')
+      component: () => import('@/view/login/login.vue')
     },
     {
       path: '/',
@@ -23,26 +29,26 @@ export default [
       children: [ 
         {
           path: '/home',
-          name: 'home',
+          name: HOME_NAME,
           meta: {
             hideInMenu: true, // 左侧菜单不显示
             title: '首页',
             notCache: true, // 非 keep-live
             icon: 'md-home'
           },
-          component: () => import('@view/home/home.vue')
+          component: () => import('@/view/home/home.vue')
         }
       ]
     },
-    {
-      path: '',
-      name: '百度',
-      meta: {
-        title: '外部链接', // 菜单中渲染一个点击跳转到外网的链接
-        href: 'http://www.baidu.com',
-        icon: 'ios-book'
-      }
-    },
+    // {
+    //   path: '',
+    //   name: '百度',
+    //   meta: {
+    //     title: '外部链接', // 菜单中渲染一个点击跳转到外网的链接
+    //     href: 'http://www.baidu.com',
+    //     icon: 'ios-book'
+    //   }
+    // },
     //仅有一级标题，无二级，面包屑中不显示
     {
       path: '/tag',
@@ -83,7 +89,7 @@ export default [
             icon: 'md-arrow-dropdown-circle',
             title: '全部商品'
           },
-          component: () => import('@view/product/all.vue')
+          component: () => import('@/view/product/all.vue')
         },
         {
           path: 'goods',
@@ -92,8 +98,37 @@ export default [
             icon: 'md-arrow-dropdown-circle',
             title: '赠品管理'
           },
-          component: () => import('@view/product/goods.vue')
+          component: () => import('@/view/product/goods.vue')
         },
+        {
+          path: 'more',
+          name: 'more',
+          meta: {
+            icon: 'logo-buffer',
+            title: '更多'
+          },
+          component: Main,
+          children: [
+            {
+              path: 'all',
+              name: 'product_more_all',
+              meta: {
+                icon: 'md-arrow-dropdown-circle',
+                title: '全部商品'
+              },
+              component: () => import('@/view/product/all.vue')
+            },
+            {
+              path: 'goods',
+              name: 'product_more_goods',
+              meta: {
+                icon: 'md-arrow-dropdown-circle',
+                title: '赠品管理'
+              },
+              component: () => import('@/view/product/goods.vue')
+            },
+          ]
+        }
       ]
     },
     {
@@ -102,7 +137,7 @@ export default [
       meta: {
         hideInMenu: true
       },
-      component: () => import('@view/error-page/401.vue')
+      component: () => import('@/view/error-page/401.vue')
     },
     {
       path: '/500',
@@ -110,7 +145,7 @@ export default [
       meta: {
         hideInMenu: true
       },
-      component: () => import('@view/error-page/500.vue')
+      component: () => import('@/view/error-page/500.vue')
     },
     {
       path: '*',
@@ -118,6 +153,6 @@ export default [
       meta: {
         hideInMenu: true
       },
-      component: () => import('@view/error-page/404.vue')
+      component: () => import('@/view/error-page/404.vue')
     }
   ]

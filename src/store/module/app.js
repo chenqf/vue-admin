@@ -1,8 +1,8 @@
 import {
     getMenuByRouter
-} from '@libs/util'
+} from '@/libs/util'
 
-import routers from '@router/routers'
+import routers from '@/router/routers'
 
 export default{
     state:{
