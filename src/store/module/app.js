@@ -1,6 +1,6 @@
 import {
     getMenuByRouter
-} from '@/libs/util'
+} from '@/libs/tool'
 
 import routers from '@/router/routers'
 
@@ -12,7 +12,7 @@ export default{
         menuList:(state,getters,rootState)=>getMenuByRouter(routers)
     },
     mutations:{
-
+        
     },
     actions:{
 

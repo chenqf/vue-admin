@@ -32,7 +32,16 @@
 </template>
 
 <script>
-import {login} from '@/api/user.js'
+import {
+  login
+} from '@/api/user';
+import {
+  setToken
+} from '@/libs/tool';
+const {
+  HOME_NAME
+} = config.ROUTER;
+import config from '@/config';
 export default {
   data(){
     return {
@@ -48,7 +57,8 @@ export default {
         if (valid) {
             login(this.form).then((data)=>{
               if(data.id){
-                // this.$router.replace({name:'home'})
+                setToken(data.token)
+                this.$router.replace({name:HOME_NAME})
               }
             }).catch(()=>{
               this.$message.error('用户名或密码错误');

@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import asideMenu from "./aside-menu.vue";
 
 export default {
@@ -43,9 +44,9 @@ export default {
   },
 
   computed: {
-    menuList() {
-      return this.$store.getters.menuList;
-    }
+    ...mapGetters([
+      'menuList'
+    ])
   },
   methods: {},
   components: {

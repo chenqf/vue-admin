@@ -41,7 +41,6 @@ export default [
       redirect: '/home',
       component: Main,
       meta: {
-        notAuth:true,
         hideInBread:true, // 面包屑中不显示
         hideInMenu: true // 左侧菜单不显示
       },

@@ -10,7 +10,7 @@ import './registerServiceWorker'
 
 //TODO 开发环境-引入mock
 if(process.env.NODE_ENV !== 'online'){
-  // require('mock')
+  require('@/mock')
 }
 
 
@@ -20,7 +20,7 @@ Vue.config.productionTip = false
 
 //TODO 全局注册指令 复制、拖拽等
 
-new Vue({
+window.vm = new Vue({
   router,
   store,
   render: h => h(App)

@@ -1,8 +1,41 @@
 import config from '@/config'
+import Cookie from 'js-cookie'
+
+const {TOKEN,COOKIE_DOMAIN} = config;
+const {
+  KEY:TOKEN_KEY,
+  EXPIRES:TOKEN_EXPIRES
+} = TOKEN;
+
+export const getTimestampFor = (str)=>{
+    let tag = str.slice(-1);
+    let num = Number(str.slice(0,-1));
+    if(tag === 'd'){
+      return 24 * 60 * 60 * 1000 * num;
+    }else if(tag === 'h'){
+      return 60 * 60 * 1000 * num;
+    }else if(tag === 'm'){
+      return 60 * 1000 * num;
+    }else if(tag === 's'){
+      return 1000 * num;
+    }else{
+      return num;
+    }
+}
 
 
+export const getToken = ()=>{
+    return Cookie.get(TOKEN_KEY,{
+        domain:COOKIE_DOMAIN
+    })
+}
 
-
+export const setToken = (value)=>{
+    return Cookie.set(TOKEN_KEY,value,{
+      domain:COOKIE_DOMAIN,
+      expires:new Date(Date.now() + getTimestampFor(TOKEN_EXPIRES))
+  })
+}
 
 
 

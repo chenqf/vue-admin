@@ -15,5 +15,9 @@ export default {
         LOGIN_NAME:'login',
         NOTFOUND_NAME:'error_404',
     },
-    TOKEN_KEY:'token'
+    COOKIE_DOMAIN:DEV ? '':'',
+    TOKEN:{
+        KEY:'token',
+        EXPIRES:'2h' // 单位 d h m s 天 时 分 秒
+    }
 }

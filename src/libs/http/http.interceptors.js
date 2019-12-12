@@ -19,6 +19,7 @@ export const defaultHttpInterceptors = function(instance,options){
 
     // 添加响应拦截器
     instance.interceptors.response.use(function (response) {
+        console.log(response.data)
         let data = response.data;
         let code = data.code;
         if(data.success){

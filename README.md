@@ -4,11 +4,15 @@ admin-cli
 
 iview-admin https://lison16.github.io/iview-admin-doc/#/
 
-路由元信息，用作权限管理
+mock 相关内容
+
+路由元信息，用作权限管理  登录接口，权限接口，相互独立
+
+addRoutes 动态添加
 
 meta 上添加title 关键字，用于修改浏览器title
 
-mock 相关内容
+
 
 excl 的处理
 
