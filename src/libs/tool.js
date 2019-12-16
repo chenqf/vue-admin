@@ -1,27 +1,15 @@
 import config from '@/config'
 import Cookie from 'js-cookie'
 
+import {  hasOneOf ,getTimestampFor} from '@/libs/util'
+
 const {TOKEN,COOKIE_DOMAIN} = config;
 const {
   KEY:TOKEN_KEY,
   EXPIRES:TOKEN_EXPIRES
 } = TOKEN;
 
-export const getTimestampFor = (str)=>{
-    let tag = str.slice(-1);
-    let num = Number(str.slice(0,-1));
-    if(tag === 'd'){
-      return 24 * 60 * 60 * 1000 * num;
-    }else if(tag === 'h'){
-      return 60 * 60 * 1000 * num;
-    }else if(tag === 'm'){
-      return 60 * 1000 * num;
-    }else if(tag === 's'){
-      return 1000 * num;
-    }else{
-      return num;
-    }
-}
+
 
 
 export const getToken = ()=>{
@@ -38,6 +26,34 @@ export const setToken = (value)=>{
 }
 
 
+const hasAccess = (access, route) => {
+  if (route.meta && route.meta.access) {
+    return hasOneOf(access, route.meta.access)
+  }
+  else {
+    return true
+  }
+}
+
+
+export const canTurnTo = (name, access, routes) => {
+  const routePermissionJudge = (list) => {
+    return list.some(item => {
+      if (item.children && item.children.length) {
+        return routePermissionJudge(item.children)
+      } else if (item.name === name) {
+        return hasAccess(access, item)
+      }
+    })
+  }
+  return routePermissionJudge(routes)
+}
+
+export const setTitle = title=>{
+
+}
+
+
 
 
 
@@ -45,19 +61,18 @@ export const hasChild = (item) => {
   return item.children && item.children.length !== 0
 }
 
-//TODO 判断是否有权限
-const showThisMenuEle = (item, access) => {
-  //   if (item.meta && item.meta.access && item.meta.access.length) {
-  //     if (hasOneOf(item.meta.access, access)){
-  //         return true
-  //     } 
-  //     else{
-  //         return false
-  //     } 
-  //   } else{
-  //     return true
-  //   } 
-  return true;
+//判断是否有权限
+const showThisMenuEle = (item, access = []) => {
+    if (item.meta && item.meta.access && item.meta.access.length) {
+      if (hasOneOf(item.meta.access, access)){
+          return true
+      } 
+      else{
+          return false
+      } 
+    } else{
+      return true
+    } 
 }
 
 

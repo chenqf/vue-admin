@@ -32,15 +32,10 @@
 </template>
 
 <script>
-import {
-  login
-} from '@/api/user';
-import {
-  setToken
-} from '@/libs/tool';
 const {
   HOME_NAME
 } = config.ROUTER;
+import { mapActions } from 'vuex'
 import config from '@/config';
 export default {
   data(){
@@ -52,17 +47,20 @@ export default {
     }
   },
   methods:{
+    ...mapActions([
+      'handleLogin',
+      'getUserInfo'
+    ]),
     onSubmit(){
       this.$refs.form.validate((valid) => {
         if (valid) {
-            login(this.form).then((data)=>{
-              if(data.id){
-                setToken(data.token)
-                this.$router.replace({name:HOME_NAME})
-              }
-            }).catch(()=>{
-              this.$message.error('用户名或密码错误');
+          this.handleLogin(this.form).then(res => {
+            return this.getUserInfo().then(res => {
+              this.$router.replace({name:HOME_NAME})
             })
+          }).catch(()=>{
+            this.$message.error('用户名或密码错误');
+          })
         } else {
           return false;
         }

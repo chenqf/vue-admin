@@ -4,6 +4,8 @@ admin-cli
 
 iview-admin https://lison16.github.io/iview-admin-doc/#/
 
+log
+
 mock 相关内容
 
 路由元信息，用作权限管理  登录接口，权限接口，相互独立

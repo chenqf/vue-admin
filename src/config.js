@@ -14,6 +14,7 @@ export default {
         HOME_NAME:'home',
         LOGIN_NAME:'login',
         NOTFOUND_NAME:'error_404',
+        NOT_AUTH_NAME:'error_401',
     },
     COOKIE_DOMAIN:DEV ? '':'',
     TOKEN:{

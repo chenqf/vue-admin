@@ -5,7 +5,8 @@ import config from '@/config';
 const {
   HOME_NAME,
   LOGIN_NAME,
-  NOTFOUND_NAME
+  NOTFOUND_NAME,
+  NOT_AUTH_NAME,
 } = config.ROUTER;
 
 
@@ -16,7 +17,7 @@ const {
  * meta
  *    title：标题（浏览器顶部标题，面包屑标题、菜单标题）
  *    hideInMenu：(default: false)是否在菜单中显示
- *    showAlways：(default: false)只有一个子路由时，是否显示父路由 TODO
+ *    showAlways：(default: false)只有一个子路由时，是否显示父路由
  *    icon：图标（面包屑图标、菜单图标）TODO
  *    hideInBread：是否在面包屑中显示 TODO
  *    notCache：(default: false)是否启用keep-alive TODO
@@ -52,7 +53,7 @@ export default [
             hideInMenu: true, // 左侧菜单不显示
             title: '首页',
             notCache: true, // 非 keep-live
-            icon: 'md-home'
+            icon: 'el-icon-upload'
           },
           component: () => import('@/view/home/home.vue')
         }
@@ -67,7 +68,100 @@ export default [
     //     icon: 'ios-book'
     //   }
     // },
-    //仅有一级标题，无二级，面包屑中不显示
+    {
+      path:'/super',
+      name:'super',
+      component:Main,
+      meta:{
+        title:'super',
+        title:'super',
+        showAlways:true,
+        access:['super'],
+        icon:'el-icon-success',
+      },
+      children:[
+        {
+          path: 'super1',
+          name: 'super1',
+          meta: {
+            access:['super'],
+            icon: 'el-icon-date',
+            title: 'super1'
+          },
+          component: () => import('@/view/auth/super/super1.vue')
+        }
+      ]
+    },
+    {
+      path:'/admin',
+      name:'admin',
+      component:Main,
+      meta:{
+        icon: 'el-icon-location',
+        title: 'admin',
+        access:['super','admin']
+      },
+      children:[
+        {
+          path: 'admin1',
+          name: 'admin1',
+          meta: {
+            access:['super','admin'],
+            icon: 'el-icon-bell',
+            title: 'admin1'
+          },
+          component: () => import('@/view/auth/admin/admin1.vue')
+        },
+        {
+          path: 'admin2',
+          name: 'admin2',
+          meta: {
+            access:['super','admin'],
+            icon: 'el-icon-message',
+            title: 'admin2'
+          },
+          component: () => import('@/view/auth/admin/admin2.vue')
+        },
+      ]
+    },
+    {
+      path:'/white',
+      name:'white',
+      component:Main,
+      meta:{
+        icon: 'el-icon-menu',
+        title: 'white'
+      },
+      children:[
+        {
+          path: 'white1',
+          name: 'white1',
+          meta: {
+            icon: 'el-icon-news',
+            title: 'white1'
+          },
+          component: () => import('@/view/auth/white/white1.vue')
+        },
+        {
+          path: 'white2',
+          name: 'white2',
+          meta: {
+            icon: 'el-icon-mobile-phone',
+            title: 'white2'
+          },
+          component: () => import('@/view/auth/white/white2.vue')
+        },
+        {
+          path: 'white3',
+          name: 'white3',
+          meta: {
+            icon: 'el-icon-rank',
+            title: 'white3'
+          },
+          component: () => import('@/view/auth/white/white3.vue')
+        },
+      ]
+    },
     {
       path: '/tag',
       name: 'tag',
@@ -75,7 +169,7 @@ export default [
       meta: {
         hideInBread: true,
         // showAlways:true,
-        icon: '_qq',
+        icon: 'el-icon-share',
         title: '总显示'
       },
       children: [
@@ -83,7 +177,7 @@ export default [
           path: 'tag_manage',
           name: 'tag_manage',
           meta: {
-            icon: '_qq',
+            icon: 'el-icon-star-off',
             title: '标签管理'
           },
           component: () => import('@/view/tag/manage.vue')
@@ -95,7 +189,7 @@ export default [
       path: '/product',
       name: 'product',
       meta: {
-        icon: 'logo-buffer',
+        icon: 'el-icon-tickets',
         title: '商品管理'
       },
       component: Main,
@@ -104,7 +198,7 @@ export default [
           path: 'all',
           name: 'product_all',
           meta: {
-            icon: 'md-arrow-dropdown-circle',
+            icon: 'el-icon-plus',
             title: '全部商品'
           },
           component: () => import('@/view/product/all.vue')
@@ -113,7 +207,7 @@ export default [
           path: 'goods',
           name: 'product_goods',
           meta: {
-            icon: 'md-arrow-dropdown-circle',
+            icon: 'el-icon-phone',
             title: '赠品管理'
           },
           component: () => import('@/view/product/goods.vue')
@@ -122,7 +216,7 @@ export default [
           path: 'more',
           name: 'more',
           meta: {
-            icon: 'logo-buffer',
+            icon: 'el-icon-circle-check',
             title: '更多'
           },
           component: ParentView,
@@ -131,7 +225,7 @@ export default [
               path: 'all',
               name: 'product_more_all',
               meta: {
-                icon: 'md-arrow-dropdown-circle',
+                icon: 'el-icon-minus',
                 title: '全部商品'
               },
               component: () => import('@/view/product/all.vue')
@@ -140,7 +234,7 @@ export default [
               path: 'goods',
               name: 'product_more_goods',
               meta: {
-                icon: 'md-arrow-dropdown-circle',
+                icon: 'el-icon-question',
                 title: '赠品管理'
               },
               component: () => import('@/view/product/goods.vue')
@@ -151,7 +245,7 @@ export default [
     },
     {
       path: '/401',
-      name: 'error_401',
+      name: NOT_AUTH_NAME,
       meta: {
         hideInMenu: true
       },

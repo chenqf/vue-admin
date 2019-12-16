@@ -13,3 +13,9 @@ export const login = ({name,password}) => {
     data
   })
 }
+
+export const userInfo = () => {
+  return request.get({
+    url: '/user/info'
+  })
+}

@@ -9,7 +9,9 @@ export default{
 
     },
     getters:{
-        menuList:(state,getters,rootState)=>getMenuByRouter(routers)
+        menuList:(state,getters,rootState)=>{
+            return getMenuByRouter(routers,rootState.user.access)
+        }
     },
     mutations:{
         
