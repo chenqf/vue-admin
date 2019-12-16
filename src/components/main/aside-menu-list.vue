@@ -5,7 +5,7 @@
         <template v-if="isParent(menu)">
           <el-submenu :key="index" :index="menu.name">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i v-if="menu.meta && menu.meta.icon" :class="menu.meta.icon"></i>
               <span>{{menu.meta.title}}</span>
             </template>
             <!-- 递归调用 -->
@@ -14,13 +14,13 @@
         </template>
         <template v-else-if="isSingleChild(menu)">
           <el-menu-item :key="index" :index="menu.children[0].name" >
-            <i class="el-icon-menu"></i>
+            <i v-if="menu.children[0].meta && menu.children[0].meta.icon" :class="menu.children[0].meta.icon"></i>
             <span slot="title">{{menu.children[0].meta.title}}</span>
           </el-menu-item>
         </template>
         <template v-else>
           <el-menu-item :key="index" :index="menu.name" >
-            <i class="el-icon-menu"></i>
+            <i v-if="menu.meta && menu.meta.icon" :class="menu.meta.icon"></i>
             <span slot="title">{{menu.meta.title}}</span>
           </el-menu-item>
         </template>
