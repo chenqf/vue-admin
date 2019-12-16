@@ -1,8 +1,9 @@
 
 
-const DEV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PRODUCT';
+const DEV = process.env.NODE_ENV !== 'online' ? 'DEV' : 'PRODUCT';
 
 export default {
+    DEBUG:DEV === 'DEV',
     BASE_TITLE:'Admin',
     HTTP:{
         PROTOCOL:DEV ? 'http:':'http:',
