@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 import config from '@/config'
 import store from '@/store'
 import {
-  getToken,setToken,canTurnTo
+  getToken,setToken,canTurnTo,setTitle
 } from '@/libs/tool'
 
 const {
@@ -83,7 +83,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(to => {
-  // setTitle(to, router.app)
+  setTitle(to, router.app)
   NProgress.done();
   window.scrollTo(0, 0)
 })

@@ -3,6 +3,7 @@
 const DEV = process.env.NODE_ENV === 'development' ? 'DEV' : 'PRODUCT';
 
 export default {
+    BASE_TITLE:'Admin',
     HTTP:{
         PROTOCOL:DEV ? 'http:':'http:',
         HOSTNAME:DEV ? '10.13.1.93':'10.13.1.93',

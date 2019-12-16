@@ -3,7 +3,7 @@ import Cookie from 'js-cookie'
 
 import {  hasOneOf ,getTimestampFor} from '@/libs/util'
 
-const {TOKEN,COOKIE_DOMAIN} = config;
+const {TOKEN,COOKIE_DOMAIN,BASE_TITLE} = config;
 const {
   KEY:TOKEN_KEY,
   EXPIRES:TOKEN_EXPIRES
@@ -49,8 +49,28 @@ export const canTurnTo = (name, access, routes) => {
   return routePermissionJudge(routes)
 }
 
-export const setTitle = title=>{
+export const getRouteTitleHandled = (route)=>{
+  let router = { ...route }
+  let meta = { ...route.meta }
+  let title = ''
+  if (meta.title) {
+    if (typeof meta.title === 'function') {
+      meta.__titleIsFunction__ = true
+      title = meta.title(router)
+    } else{
+      title = meta.title
+    }
+  }
+  meta.title = title
+  router.meta = meta
+  return router
+}
 
+export const setTitle = (router,vm)=>{
+  const route = getRouteTitleHandled(router)
+  const pageTitle = (route.meta && route.meta.title) || route.name;
+  const resTitle = pageTitle ? `${BASE_TITLE} - ${pageTitle}` : title
+  window.document.title = resTitle
 }
 
 
