@@ -65,7 +65,7 @@ $icon-hover-color: #57a3f3;
 .el-container {
   height: 100%;
   & /deep/ .el-aside.left-aside {
-    background-color: $red;
+    background-color: $$aside-bg-color;
     color: $aside-color;
     width: auto !important;
     transition: width 0.1s;
