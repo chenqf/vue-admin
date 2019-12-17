@@ -56,16 +56,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$aside-bg-color: #001529;
-$aside-color: rgba(255, 255, 255, 0.7);
-$header-height: 64px;
-$icon-color: #5c6b77;
-$icon-hover-color: #57a3f3;
-
 .el-container {
   height: 100%;
   & /deep/ .el-aside.left-aside {
-    background-color: $$aside-bg-color;
+    background-color: $aside-bg-color;
     color: $aside-color;
     width: auto !important;
     transition: width 0.1s;
@@ -85,10 +79,10 @@ $icon-hover-color: #57a3f3;
     border-bottom: 1px solid #f0f0f0;
     height: $header-height !important;
     [class^="el-icon-"] {
-      color: $icon-color;
+      color: $header-icon-color;
       cursor: pointer;
       &:hover {
-        color: $icon-hover-color;
+        color: $header-icon-color-hover;
       }
     }
     .menu-control {

@@ -1,5 +1,5 @@
 
-import {createRequest} from '@api.request'
+import {createRequest} from '_request'
 
 const request = createRequest(); //这里也可以设置baseUrl
 

@@ -47,9 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-$aside-bg-color: #001529;
-$aside-color: rgba(255, 255, 255, 0.7);
-$aside-open-width: 260px;
+
 
 .el-menu.aside-menu,
 .el-menu.aside-menu .el-menu--inline {
@@ -62,18 +60,18 @@ $aside-open-width: 260px;
       color: $aside-color;
       // 子菜单被选中
       &.is-active {
-        background: #2d8cf0 !important;
-        color: #fff !important;
+        background: $aside-menu-bg-color-active !important;
+        color: $aside-menu-color-active !important;
         & > i {
-          color: #fff;
+          color: $aside-menu-color-active;
         }
       }
       // 子菜单鼠标悬浮
       &:hover {
-        background-color: $aside-bg-color;
-        color: #fff;
+        background-color: $aside-menu-bg-color-hover;
+        color: $aside-menu-color-hover;
         & > i {
-          color: #fff;
+          color: $aside-menu-color-hover;
         }
       }
     }
@@ -89,19 +87,19 @@ $aside-open-width: 260px;
       }
       // 父菜单鼠标悬浮
       & > .el-submenu__title:hover {
-        background-color: $aside-bg-color;
-        color: #fff;
+        background-color: $aside-menu-bg-color-hover;
+        color: $aside-menu-color-hover;
         & > i {
-          color: #fff;
+          color:$aside-menu-color-hover;
         }
       }
       // 父菜单中有被选中
       &.is-active {
         & > .el-submenu__title {
-          background-color: $aside-bg-color;
-          color: #fff;
+          background-color:$aside-bg-color;
+          color: $aside-menu-color-active;
           & > i {
-            color: #fff;
+            color: $aside-menu-color-active;
           }
         }
       }
@@ -112,24 +110,24 @@ $aside-open-width: 260px;
     // 单独标签
     & > div > li.el-menu-item {
       & > div > i {
-        color: #fff;
+        color: $aside-menu-min-color;
       }
       &.is-active,
       &:hover {
-        background: $aside-bg-color;
+        background: $aside-menu-min-bg-color;
       }
     }
     // 复合标签
     & > div > li.el-submenu > .el-submenu__title {
         &:hover{
-          background: $aside-bg-color;
+          background: $aside-menu-min-color;
         }
         & > *{
           display: none;
         }
 
         & > i:first-child{
-          color:#fff;
+          color:$aside-menu-min-bg-color;
           display: inline;
         }
     }

@@ -5,9 +5,8 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
         '_c': path.resolve(__dirname, 'src/components/'),
-        '@api.request': path.resolve(__dirname, 'src/libs/http/api.request.js'),
+        '_request': path.resolve(__dirname, 'src/libs/http/api.request.js'),
       }
     } 
   },
@@ -19,7 +18,7 @@ module.exports = {
 
     const addSassResourcesLoader = (rules, type) => {
         rules.oneOf(type).use('sass-resources-loader').loader('sass-resources-loader').options({
-            resources: './src/assets/scss/_test.scss' // your resource file or patterns
+            resources: './src/assets/scss/_variable.scss' // your resource file or patterns
         });
     };
     ofs.forEach(type => { addSassResourcesLoader(cssRules, type); addSassResourcesLoader(scssRules, type);addSassResourcesLoader(postRules, type) });
