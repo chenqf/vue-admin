@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import asideMenuList from "./aside-menu-list.vue";
+import AsideMenuList from "./aside-menu-list.vue";
 export default {
   name: "asideMenu",
   props: {
@@ -25,7 +25,7 @@ export default {
     } 
   }, 
   components: {
-    asideMenuList
+    AsideMenuList
   },
   methods: {
     showParent(menu) {
@@ -53,6 +53,7 @@ export default {
 .el-menu.aside-menu .el-menu--inline {
   background-color: $aside-bg-color;
   border-right: 1px solid $aside-bg-color;
+  // 正常展示
   &:not(.el-menu--collapse) {
     width: $aside-open-width;
     // 子菜单
@@ -105,6 +106,7 @@ export default {
       }
     }
   }
+
   // 最小化
   &.el-menu--collapse {
     // 单独标签
@@ -120,14 +122,14 @@ export default {
     // 复合标签
     & > div > li.el-submenu > .el-submenu__title {
         &:hover{
-          background: $aside-menu-min-color;
+          background: $aside-menu-min-bg-color;
         }
         & > *{
           display: none;
         }
 
         & > i:first-child{
-          color:$aside-menu-min-bg-color;
+          color:$aside-menu-min-color;
           display: inline;
         }
     }

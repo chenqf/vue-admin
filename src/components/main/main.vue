@@ -1,97 +1,47 @@
 <template>
   <el-container>
-
     <!-- 左侧 -->
-    <el-aside class="left-aside">
-      <div class="aside-logo">Logo</div>
-      <aside-menu :collapsed="collapsed" :menu-list="menuList" />
-    </el-aside>
-
+    <left-aside :collapsed="collapsed" :menu-list="menuList"/>
     <!-- 右侧 -->
     <el-container>
-
       <!-- 头部 -->
-      <el-header>
-        <i
-          class="el-icon-s-fold menu-control"
-          :class="{'is-collapsed':collapsed}"
-          @click="collapsed = !collapsed"
-        />
-        <i class="el-icon-full-screen" style="font-size:23px;" />
-      </el-header>
-
+      <HeaderBar :collapsed="collapsed"/>
       <!-- 内容区 -->
       <el-main>
         <router-view />
       </el-main>
-
       <!-- 底部 -->
       <el-footer>Footer</el-footer>
-
     </el-container>
   </el-container>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import asideMenu from "./aside-menu.vue";
+import {mapGetters,mapState} from 'vuex'
+import LeftAside from './left-aside'
+import HeaderBar from './header-bar'
+
 
 export default {
-  data() {
-    return {
-      collapsed: false // 是否最小化左侧菜单
-    };
-  },
-
   computed: {
+    ...mapState({ 
+        collapsed:state=>state.app.collapsed
+    }),
     ...mapGetters([
       'menuList'
     ])
   },
   methods: {},
   components: {
-    asideMenu
+    LeftAside,
+    HeaderBar,
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .el-container {
+  background-color:#fff;
   height: 100%;
-  & /deep/ .el-aside.left-aside {
-    background-color: $aside-bg-color;
-    color: $aside-color;
-    width: auto !important;
-    transition: width 0.1s;
-
-    & > .aside-logo {
-      height: $header-height;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
-  & > .el-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #f0f0f0;
-    height: $header-height !important;
-    [class^="el-icon-"] {
-      color: $header-icon-color;
-      cursor: pointer;
-      &:hover {
-        color: $header-icon-color-hover;
-      }
-    }
-    .menu-control {
-      font-size: 28px;
-      transition: transform 0.2s;
-    }
-    .is-collapsed {
-      transform: rotate(180deg);
-    }
-  }
 }
 </style>

@@ -6,7 +6,7 @@ import routers from '@/router/routers'
 
 export default{
     state:{
-
+        collapsed:false
     },
     getters:{
         menuList:(state,getters,rootState)=>{
@@ -14,7 +14,9 @@ export default{
         }
     },
     mutations:{
-        
+        changeCollapsed (state, collapsed) {
+            state.collapsed = !state.collapsed;
+        },
     },
     actions:{
 
