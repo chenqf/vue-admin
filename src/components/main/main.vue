@@ -55,8 +55,7 @@ export default {
 };
 </script>
 
-
-<style lang="scss">
+<style lang="scss" scoped>
 $aside-bg-color: #001529;
 $aside-color: rgba(255, 255, 255, 0.7);
 $header-height: 64px;
@@ -65,8 +64,8 @@ $icon-hover-color: #57a3f3;
 
 .el-container {
   height: 100%;
-  & > .el-aside.left-aside {
-    background-color: $aside-bg-color;
+  & /deep/ .el-aside.left-aside {
+    background-color: $red;
     color: $aside-color;
     width: auto !important;
     transition: width 0.1s;
