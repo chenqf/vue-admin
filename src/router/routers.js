@@ -34,7 +34,7 @@ export default [
         hideInBread:true, // 面包屑中不显示
         hideInMenu: true // 左侧菜单不显示
       },
-      component: () => import('@/view/login/login.vue')
+      component: () => import('@/view/person/login.vue')
     },
     {
       path: '/',

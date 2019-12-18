@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import {mapGetters,mapState,mapMutations} from 'vuex'
+import {mapGetters,mapState,mapMutations,mapActions } from 'vuex'
 import LeftAside from './left-aside'
 import HeaderBar from './header-bar'
-
+import config from '@/config';
 export default {
   computed: {
     ...mapState({ 
@@ -38,11 +38,20 @@ export default {
   },
   methods: {
     ...mapMutations(["changeCollapsed"]),
+    ...mapActions([
+      'handleLogOut',
+    ]),
     updateCollapsed(){
       this.changeCollapsed();
     },
     selectOperate(item){
-      console.log(item)
+      if(item === 'logout'){
+        this.handleLogOut().then(()=>{
+          this.$router.replace({name:config.ROUTER.LOGIN_NAME})
+        })
+      }else if(item === 'updatePwd'){
+        
+      }
     }
   },
   components: {

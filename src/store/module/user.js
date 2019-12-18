@@ -60,6 +60,7 @@ export default {
             commit('setName', '')
             commit('setPhoto', '')
             commit('setAccess', [])
+            commit('setHasGetInfo', false)
             resolve();
         })
     },
