@@ -1,19 +1,15 @@
 <template>
-  <el-dropdown>
+  <el-dropdown @command="handleCommand">
     <div class="user-area">
-      <el-avatar style="margin-right:8px;" size="medium" :src="avatar" @error="errorHandler">
+      <el-avatar style="margin-right:8px;" size="medium" :src="avatar" >
         <img src="@/assets/image/default-avatar.png"/>
       </el-avatar>
-      
       <span class="down-arrow"></span>
     </div>
     
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item>黄金糕</el-dropdown-item>
-      <el-dropdown-item>狮子头</el-dropdown-item>
-      <el-dropdown-item>螺蛳粉</el-dropdown-item>
-      <el-dropdown-item>双皮奶</el-dropdown-item>
-      <el-dropdown-item>蚵仔煎</el-dropdown-item>
+      <el-dropdown-item command="updatePwd">修改密码</el-dropdown-item>
+      <el-dropdown-item command="logout">退出登录</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
@@ -28,8 +24,8 @@
       }
     },
     methods:{
-      errorHandler(){
-        return true;
+      handleCommand(command){
+        this.$emit('select-operate',command)
       }
     }
   }

@@ -9,6 +9,7 @@
         :collapsed="collapsed" 
         :avatar="avatarImage"
         @update-collapsed="updateCollapsed" 
+        @select-operate="selectOperate"
       />
       <!-- 内容区 -->
       <el-main>
@@ -39,6 +40,9 @@ export default {
     ...mapMutations(["changeCollapsed"]),
     updateCollapsed(){
       this.changeCollapsed();
+    },
+    selectOperate(item){
+      console.log(item)
     }
   },
   components: {

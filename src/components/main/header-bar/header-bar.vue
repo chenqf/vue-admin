@@ -12,7 +12,7 @@
         </div>
         <div class="header-right">
             <full-screen style="margin-right:10px"/>
-            <header-user :avatar="avatar"/> 
+            <header-user :avatar="avatar" @select-operate="selectOperate"/>
         </div>
     </el-header>
 </template>
@@ -36,6 +36,9 @@ export default {
         HeaderUser
     },
     methods:{
+        selectOperate(item){
+            this.$emit('select-operate',item)
+        },
         changeCollapsed(){
             this.$emit('update-collapsed')
         }
