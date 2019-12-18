@@ -1,54 +1,83 @@
 <template>
-  <el-header>
-    <i
-      class="el-icon-s-fold menu-control"
-      :class="{'is-collapsed':collapsed}"
-      @click="changeCollapsed"
-    />
-    <full-screen/>
-  </el-header>
+    <el-header class="header-bar">
+        <div class="header-left">
+            <i
+                class="el-icon-s-fold menu-control"
+                :class="{'is-collapsed':collapsed}"
+                @click="changeCollapsed"
+            />
+        </div>
+        <div class="header-bread">
+            
+        </div>
+        <div class="header-right">
+            <full-screen style="margin-right:10px"/>
+            <header-user :avatar="avatar"/>
+        </div>
+    </el-header>
 </template>
 
-
 <script>
-import { mapState, mapMutations } from "vuex";
 import FullScreen from './full-screen.vue'
+import HeaderUser from './header-user.vue'
 export default {
-  props:{
-      collapsed:{
-          type:Boolean,
-          default:false
-      }
-  },
-  methods: {
-    ...mapMutations(["changeCollapsed"])
-  },
-  components:{
-      FullScreen
-  }
-};
+    props:{
+        collapsed:{
+            type:Boolean,
+            default:false
+        },
+        avatar:{
+            type:String,
+            default:''
+        }
+    },
+    components: {
+        FullScreen,
+        HeaderUser
+    },
+    methods:{
+        changeCollapsed(){
+            this.$emit('update-collapsed')
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
-.el-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #f0f0f0;
-  height: $header-height !important;
-  [class^="el-icon-"] {
-    color: $header-icon-color;
-    cursor: pointer;
-    &:hover {
-      color: $header-icon-color-hover;
+  .header-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+    height: $header-height !important;
+
+    & > .header-bread{
+      flex:1;
     }
+
+    & > .header-left{
+        .menu-control {
+            font-size: 28px;
+            transition: transform 0.2s;
+            color: $header-icon-color;
+            cursor: pointer;
+            &:hover {
+                color: $header-icon-color-hover;
+            }
+        }
+        .is-collapsed {
+            transform: rotate(180deg);
+        }
+    }
+
+    & > .header-right{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    
+
+    
   }
-  .menu-control {
-    font-size: 28px;
-    transition: transform 0.2s;
-  }
-  .is-collapsed {
-    transform: rotate(180deg);
-  }
-}
 </style>

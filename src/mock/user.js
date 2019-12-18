@@ -30,7 +30,7 @@ mock(/\/user\/info/, ({url,type,body})=>{
     return successResult({
         'id|1-100':2,
         name:Random.ctitle(),
-        photo:Random.image('200x200'),
+        photo:'123',//Random.image('200x200')
         access:[
             'admin'
         ]

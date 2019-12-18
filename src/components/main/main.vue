@@ -3,9 +3,13 @@
     <!-- 左侧 -->
     <left-aside :collapsed="collapsed" :menu-list="menuList"/>
     <!-- 右侧 -->
-    <el-container>
+    <el-container> 
       <!-- 头部 -->
-      <HeaderBar :collapsed="collapsed"/>
+      <header-bar 
+        :collapsed="collapsed" 
+        :avatar="avatarImage"
+        @update-collapsed="updateCollapsed" 
+      />
       <!-- 内容区 -->
       <el-main>
         <router-view />
@@ -17,10 +21,9 @@
 </template>
 
 <script>
-import {mapGetters,mapState} from 'vuex'
+import {mapGetters,mapState,mapMutations} from 'vuex'
 import LeftAside from './left-aside'
 import HeaderBar from './header-bar'
-
 
 export default {
   computed: {
@@ -28,10 +31,16 @@ export default {
         collapsed:state=>state.app.collapsed
     }),
     ...mapGetters([
-      'menuList'
+      'menuList',
+      'avatarImage'
     ])
   },
-  methods: {},
+  methods: {
+    ...mapMutations(["changeCollapsed"]),
+    updateCollapsed(){
+      this.changeCollapsed();
+    }
+  },
   components: {
     LeftAside,
     HeaderBar,
@@ -39,9 +48,12 @@ export default {
 };
 </script>
 
+
+
 <style lang="scss">
 .el-container {
   background-color:#fff;
   height: 100%;
+  
 }
 </style>

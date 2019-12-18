@@ -19,7 +19,7 @@ export default {
     access:[]
   },
   getters: {
-
+    avatarImage:state=>state.photo
   },
   mutations: {
     setHasGetInfo (state, status) {

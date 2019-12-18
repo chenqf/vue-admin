@@ -1,5 +1,7 @@
 <template>
-  <i @click="handleChange" :class="full ? 'el-icon-crop':'el-icon-full-screen'" style="font-size:23px;" />
+    <el-tooltip v-if="showFullScreenBtn" effect="dark" :content="full?'退出全屏':'全屏'" placement="bottom">
+        <i @click="handleChange" :class="full ? 'el-icon-crop':'el-icon-full-screen'" style="font-size:23px;" />
+    </el-tooltip>
 </template>
 
 <script>
@@ -39,6 +41,11 @@ export default {
             this.handleFullscreen();
         }
     },
+    computed: {
+        showFullScreenBtn () {
+            return window.navigator.userAgent.indexOf('MSIE') < 0
+        }
+    },
     mounted () {
         let isFullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen
         isFullscreen = !!isFullscreen
@@ -58,3 +65,11 @@ export default {
     }
 };
 </script>
+
+
+<style lang="scss" scoped>
+i{
+    color: $header-icon-color;
+    cursor: pointer;
+}
+</style>

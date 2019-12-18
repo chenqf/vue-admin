@@ -18,7 +18,7 @@ module.exports = {
 
     const addSassResourcesLoader = (rules, type) => {
         rules.oneOf(type).use('sass-resources-loader').loader('sass-resources-loader').options({
-            resources: './src/assets/scss/_variable.scss' // your resource file or patterns
+            resources: './src/assets/style/scss/_variable.scss' // your resource file or patterns
         });
     };
     ofs.forEach(type => { addSassResourcesLoader(cssRules, type); addSassResourcesLoader(scssRules, type);addSassResourcesLoader(postRules, type) });
