@@ -1,6 +1,6 @@
 <template>
     <el-tooltip v-if="showFullScreenBtn" effect="dark" :content="full?'退出全屏':'全屏'" placement="bottom">
-        <i @click="handleChange" :class="full ? 'el-icon-crop':'el-icon-full-screen'" style="font-size:23px;" />
+        <i @click="handleChange" :class="full ? 'el-icon-crop':'el-icon-full-screen'" />
     </el-tooltip>
 </template>
 
@@ -70,6 +70,8 @@ export default {
 <style lang="scss" scoped>
 i{
     color: $header-icon-color;
+    font-weight: 800;
+    font-size:22px;
     cursor: pointer;
 }
 </style>

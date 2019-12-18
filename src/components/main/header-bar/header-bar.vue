@@ -12,7 +12,7 @@
         </div>
         <div class="header-right">
             <full-screen style="margin-right:10px"/>
-            <header-user :avatar="avatar"/>
+            <header-user :avatar="avatar"/> 
         </div>
     </el-header>
 </template>
