@@ -3,7 +3,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import config from '@/config';
-
+import importDirective from '@/directive'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
@@ -19,6 +19,12 @@ if(config.DEBUG){
 
 
 Vue.use(ElementUI);
+
+
+/**
+ * 注册指令
+ */
+importDirective(Vue)
 
 
 //TODO 全局注册指令 复制、拖拽等

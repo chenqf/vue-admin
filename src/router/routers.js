@@ -74,7 +74,7 @@ export default [
       component:Main,
       meta:{
         title:'super',
-        title:'super',
+        name:'super',
         showAlways:true,
         access:['super'],
         icon:'el-icon-success',
@@ -159,6 +159,27 @@ export default [
             title: 'white3'
           },
           component: () => import('@/view/auth/white/white3.vue')
+        },
+      ]
+    },
+    {
+      path:'/demo',
+      name:'demo',
+      component:Main,
+      meta:{
+        icon: 'el-icon-menu',
+        title: 'demo',
+        showAlways:true
+      },
+      children:[
+        {
+          path: 'directive',
+          name: 'directive',
+          meta: {
+            icon: 'el-icon-news',
+            title: '自定义指令'
+          },
+          component: () => import('@/view/demo/directive.vue')
         },
       ]
     },
