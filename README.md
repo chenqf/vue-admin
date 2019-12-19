@@ -7,7 +7,7 @@ element-admin https://panjiachen.github.io/vue-element-admin/
 
 引导页：[driver](https://github.com/kamranahmedse/driver.js)
 
-监听节点大小变化
+监听节点大小变化  参考：https://javascript.ctolib.com/Vue-resize.html
 
 自定义指令写法问题
 
