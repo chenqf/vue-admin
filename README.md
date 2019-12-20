@@ -7,8 +7,6 @@ element-admin https://panjiachen.github.io/vue-element-admin/
 
 引导页：[driver](https://github.com/kamranahmedse/driver.js)
 
-自定义指令写法问题
-
 JOSN 编辑器
 
 markdown

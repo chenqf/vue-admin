@@ -49,7 +49,7 @@ export default {
   unbind: (el, binding) => {
     delete el.__success_callback__
     delete el.__error_callback__
-    el.__clipboard__.destroy()
+    el.__clipboard__ && el.__clipboard__.destroy()
     delete el.__clipboard__
   }
 }

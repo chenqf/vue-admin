@@ -181,6 +181,15 @@ export default [
           },
           component: () => import('@/view/demo/directive.vue')
         },
+        {
+          path: 'rich',
+          name: 'rich',
+          meta: {
+            icon: 'el-icon-news',
+            title: '富文本编辑器'
+          },
+          component: () => import('@/view/demo/rich.vue')
+        },
       ]
     },
     {
