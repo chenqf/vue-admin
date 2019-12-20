@@ -16,6 +16,8 @@ const importDirective = Vue => {
   Vue.directive('focus', directive.focus) 
   // 代码高亮
   Vue.directive('highlight', directive.highlight)
+  // 数字转为千分位
+  Vue.directive('price', directive.price)
 }
 
 export default importDirective
