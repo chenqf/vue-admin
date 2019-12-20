@@ -1,6 +1,29 @@
 import config from '@/config'
 
 
+
+
+
+export const everyTime = (func,time,callback) => {
+  let key;
+  let fn = function loop() {
+    key = setTimeout(loop, time);
+    func();
+    callback(key)
+  };
+  key = setTimeout(fn, time);
+  callback(key)
+};
+
+export const stopTime = key => {
+  window.clearTimeout(key);
+};
+
+
+
+
+
+
 /**
  * 绑定事件 on(element, event, handler)
  */
@@ -38,6 +61,86 @@ export const off = (function () {
     }
   }
 })()
+
+
+/**
+ * 节流函数
+ * @param func 用户传入的节流函数
+ * @param wait 间隔的时间
+ * @param opts leading 是否第一次执行 trailing 是否停止触发后执行
+ */
+export const throttle = function (func,wait = 50,opts = {}) {
+  let preTime = 0,
+      timer = null,
+      { leading = false, trailing = true } = opts,
+      throttled = function (...args) {
+          let now = Date.now();
+          if(!leading && !preTime){
+              preTime = now;
+          }
+          // 没有剩余时间 || 修改了系统时间
+          if(now - preTime >= wait || preTime > now){
+              if(timer){
+                  clearTimeout(timer);
+                  timer = null;
+              }
+              preTime = now;
+              func.apply(this,args);
+          }else if(!timer && trailing){
+              timer = setTimeout(()=>{
+                  preTime = Date.now();
+                  timer = null;
+                  func.apply(this,args)
+              },wait - now + preTime);
+          }
+      };
+  throttled.cancel = function () {
+      clearTimeout(timer);
+      timer = null;
+      preTime = 0;
+  };
+  return throttled;
+};
+
+
+
+/**
+ * 防抖函数
+ * @param func 用户传入的防抖函数
+ * @param wait 等待的时间
+ * @param immediate 是否立即执行
+ */
+export const debounce = function (func,wait = 50,immediate = false) {
+  // 缓存一个定时器id
+  let timer = null;
+  let result;
+  let debounced = function (...args) {
+      // 如果已经设定过定时器了就清空上一次的定时器
+      if(timer) clearTimeout(timer);
+      if(immediate){
+          let callNow = !timer;
+          //等待wait的时间间隔后，timer为null的时候，函数才可以继续执行
+          timer = setTimeout(()=>{
+              timer = null;
+          },wait);
+          //未执行过，执行
+          if(callNow) result = func.apply(this,args);
+      }else{
+          // 开始一个定时器，延迟执行用户传入的方法
+          timer = setTimeout(()=>{
+              //将实际的this和参数传入用户实际调用的函数
+              func.apply(this,args);
+          },wait);
+      }
+      return result;
+  };
+  debounced.cancel = function(){
+      clearTimeout(timer);
+      timer = null;
+  };
+  // 这里返回的函数时每次用户实际调用的防抖函数
+  return debounced;
+};
 
 
 export const hasOneOf = (targetArr, arr) => {

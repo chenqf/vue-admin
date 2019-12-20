@@ -13,7 +13,13 @@
       <code-format :text="copy_html_text" />
       <code-format :text="copy_js_text" />
     </div>
-    <textarea rows="3" cols="20"/>
+    <div class="demo">
+      <span class="title">检测尺寸改变（支持防抖和节流）：</span>
+      <textarea v-model="resize_value" v-resize:throttle.200="onResize" rows="10" cols="20"/>
+      <code-format :text="resize_html_text" />
+      <code-format :text="resize_js_text" />
+    </div>
+    
   </div>
 </template>
 
@@ -51,13 +57,24 @@ const copy_html_text = `<el-input placeholder="请输入内容" v-model="copy_va
     <el-button slot="append" v-clipboard="clipOptions">copy</el-button>
 </el-input>`;
 
+const resize_html_text = `<textarea v-resize:throttle.200="onResize" rows="10" cols="20"/>`
+const resize_js_text = 
+`methods:{
+  onResize(el){
+    //...
+  }
+}`
+
 export default {
   data() {
     return {
       focus_text: '<input type="text" v-focus >',
       copy_value: "",
       copy_html_text,
-      copy_js_text
+      copy_js_text,
+      resize_html_text,
+      resize_js_text,
+      resize_value:''
     };
   },
   computed: {
@@ -80,8 +97,10 @@ export default {
       };
     }
   },
-  mounted() {
-    
+  methods:{
+    onResize(el){
+      this.resize_value = `宽度：${el.offsetWidth};高度：${el.offsetHeight}`
+    }
   },
   components: {
     CodeFormat
