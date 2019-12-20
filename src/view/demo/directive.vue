@@ -19,7 +19,7 @@
       <code-format :text="resize_html_text" />
       <code-format :text="resize_js_text" />
     </div>
-    <div class="demo"> 
+    <div class="demo" > 
       <span class="title">数字转为千分位：</span>
       <p v-price>19881006</p>
       <code-format :text="'<p v-price>19881006</p>'" />

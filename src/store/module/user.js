@@ -16,7 +16,7 @@ export default {
     name:'',
     photo:'',
     token: getToken(),
-    access:[]
+    roles:[]
   },
   getters: {
     avatarImage:state=>state.photo
@@ -38,8 +38,8 @@ export default {
       state.token = token;
       setToken(token);
     },
-    setAccess (state, access) {
-        state.access = access
+    setRoles (state, roles) {
+        state.roles = roles
     },
   },
   actions: {
@@ -59,7 +59,7 @@ export default {
             commit('setId', '')
             commit('setName', '')
             commit('setPhoto', '')
-            commit('setAccess', [])
+            commit('setRoles', [])
             commit('setHasGetInfo', false)
             resolve();
         })
@@ -67,11 +67,10 @@ export default {
     // 获取用户相关信息
     getUserInfo({state,commit}) {
         return userInfo().then(res=>{
-            commit('setAccess', res.access)
+            commit('setRoles', res.roles)
             commit('setId', res.id)
             commit('setName', res.name)
             commit('setPhoto', res.photo)
-            commit('setAccess', res.access)
             commit('setHasGetInfo', true)
             return res;
         })

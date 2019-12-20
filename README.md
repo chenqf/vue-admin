@@ -11,9 +11,7 @@ JOSN 编辑器
 
 markdown
 
-富文本编辑器
-
-上传
+富文本--上传
 
 sticky 吸顶
 

@@ -18,6 +18,8 @@ const importDirective = Vue => {
   Vue.directive('highlight', directive.highlight)
   // 数字转为千分位
   Vue.directive('price', directive.price)
+  // 控制dom是否有权限显示
+  Vue.directive('permission', directive.permission)
 }
 
 export default importDirective

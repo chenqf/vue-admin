@@ -34,8 +34,8 @@ const router = new VueRouter({
 
 
 
-const turnTo = (to, access, next) => {
-  if (canTurnTo(to.name, access, routes)){
+const turnTo = (to, roles, next) => {
+  if (canTurnTo(to.name, roles, routes)){
     next() // 有权限，可访问
   } 
   else{
@@ -69,12 +69,12 @@ router.beforeEach((to, from, next) => {
   else {
     // 有个人信息
     if (store.state.user.hasGetInfo) {
-      turnTo(to, store.state.user.access, next)
+      turnTo(to, store.state.user.roles, next)
     } 
     // 无个人信息
     else {
       store.dispatch('getUserInfo').then(user => {
-        turnTo(to, user.access, next)
+        turnTo(to, user.roles, next)
       }).catch(() => {
         setToken('')
         next({name: LOGIN_NAME})
