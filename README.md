@@ -7,8 +7,6 @@ element-admin https://panjiachen.github.io/vue-element-admin/
 
 引导页：[driver](https://github.com/kamranahmedse/driver.js)
 
-监听节点大小变化  参考：https://javascript.ctolib.com/Vue-resize.html
-
 自定义指令写法问题
 
 JOSN 编辑器
@@ -40,10 +38,7 @@ addRoutes 动态添加
 
 excl 的处理
 
-自定义指令：拖拽 复制
-
 request 实现 next
-
 
 路由传参，使用props进行解耦
 

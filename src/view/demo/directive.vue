@@ -5,10 +5,10 @@
       <el-input v-focus />
       <code-format :text="focus_text" />
     </div>
-    <div class="demo">
+    <div class="demo"> 
       <span class="title">复制到剪切板:</span>
       <el-input placeholder="请输入内容" v-model="copy_value">
-        <el-button slot="append" v-clipboard="clipOptions">copy</el-button>
+        <el-button slot="append" v-clipboard:error="copyError" v-clipboard:success="copySuccess" v-clipboard:copy="copy_value" >copy</el-button>
       </el-input>
       <code-format :text="copy_html_text" />
       <code-format :text="copy_js_text" />
@@ -37,29 +37,32 @@ const copy_js_text = `data(){
         copy_value:'',
     }
 },
-computed:{
-    clipOptions(){
-        return {
-            value:this.copy_value,
-            success:()=>{
-                this.$notify({
-                    title: '成功',
-                    message: '复制成功',
-                    type: 'success'
-                });
-            },
-            error: () => {
-                this.$notify.error({
-                    title: '错误',
-                    message: '复制失败'
-                });
-            }
-        }
+methods:{
+    copySuccess(){
+      this.$notify({
+          title: '成功',
+          message: '复制成功',
+          type: 'success'
+      });
+    },
+    copyError(){
+      this.$notify.error({
+          title: '错误',
+          message: '复制失败'
+      });
     }
 }`;
 
-const copy_html_text = `<el-input placeholder="请输入内容" v-model="copy_value">
-    <el-button slot="append" v-clipboard="clipOptions">copy</el-button>
+const copy_html_text = `
+<el-input placeholder="请输入内容" v-model="copy_value">
+  <el-button 
+    slot="append" 
+    v-clipboard:error="copyError" 
+    v-clipboard:success="copySuccess" 
+    v-clipboard:copy="copy_value" 
+  >
+    copy
+  </el-button>
 </el-input>`;
 
 const resize_html_text = `<textarea v-resize:throttle.200="onResize" rows="10" cols="20"/>`
@@ -79,7 +82,7 @@ export default {
       copy_js_text,
       resize_html_text,
       resize_js_text,
-      resize_value:''
+      resize_value:'拖拽改变宽高'
     };
   },
   computed: {
@@ -103,6 +106,19 @@ export default {
     }
   },
   methods:{
+    copySuccess(){
+      this.$notify({
+        title: "成功",
+        message: "复制成功",
+        type: "success"
+      });
+    },
+    copyError(){
+      this.$notify.error({
+        title: "错误",
+        message: "复制失败"
+      });
+    },
     onResize(el){
       this.resize_value = `宽度：${el.offsetWidth};高度：${el.offsetHeight}`
     }
