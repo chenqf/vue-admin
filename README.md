@@ -1,9 +1,11 @@
-
-
 admin-cli
 
 iview-admin https://lison16.github.io/iview-admin-doc/#/
 element-admin https://panjiachen.github.io/vue-element-admin/
+
+侧边栏-系统设置
+
+返回顶部
 
 引导页：[driver](https://github.com/kamranahmedse/driver.js)
 
@@ -15,14 +17,7 @@ markdown
 
 sticky 吸顶
 
-侧边栏-系统设置
-
-返回顶部
-
 图标 ？
-
-
-
 
 同url跳转-进度条问题
 
@@ -37,7 +32,6 @@ excl 的处理
 request 实现 next
 
 路由传参，使用props进行解耦
-
 
 ## beforeRouteLeave  
 

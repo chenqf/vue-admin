@@ -1,5 +1,5 @@
 <template>
-    <el-header class="header-bar">
+    <header class="header-bar">
         <div class="header-left">
             <i
                 class="el-icon-s-fold menu-control"
@@ -14,7 +14,7 @@
             <full-screen style="margin-right:10px"/>
             <header-user :avatar="avatar" @select-operate="selectOperate"/>
         </div>
-    </el-header>
+    </header>
 </template>
 
 <script>
@@ -48,10 +48,11 @@ export default {
 
 <style lang="scss" scoped>
   .header-bar{
+    padding:0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid $header-border-color;
     height: $header-height !important;
 
     & > .header-bread{

@@ -133,9 +133,9 @@ export default {
 <style lang="scss" scoped>
 .demo-container {
   padding: 20px;
-  width: 90%;
   flex-direction: column;
-
+  width: 90%;
+  margin: 0 auto;
   & .demo {
     border: 1px solid #dcdee2;
     border-radius: 4px;
