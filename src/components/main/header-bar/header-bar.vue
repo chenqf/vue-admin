@@ -26,6 +26,10 @@ export default {
             type:Boolean,
             default:false
         },
+        fixedHeader:{
+            type:Boolean,
+            default:false
+        },
         avatar:{
             type:String,
             default:''

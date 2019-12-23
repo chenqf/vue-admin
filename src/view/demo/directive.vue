@@ -13,12 +13,12 @@
       <code-format :text="copy_html_text" />
       <code-format :text="copy_js_text" />
     </div>
-    <div class="demo">
+    <!-- <div class="demo">
       <span class="title">检测尺寸改变（支持防抖和节流）：</span>
       <textarea v-model="resize_value" v-resize:throttle.200="onResize" rows="10" cols="20"/>
       <code-format :text="resize_html_text" />
       <code-format :text="resize_js_text" />
-    </div>
+    </div> -->
     <div class="demo" > 
       <span class="title">数字转为千分位：</span>
       <p v-price>19881006</p>

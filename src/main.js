@@ -3,6 +3,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import config from '@/config';
+import DomPortal from 'vue-dom-portal'
 import importDirective from '@/directive'
 import router from './router'
 import store from './store'
@@ -19,6 +20,7 @@ if(config.DEBUG){
 
 
 Vue.use(ElementUI);
+Vue.use(DomPortal)
 
 
 /**
