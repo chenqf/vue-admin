@@ -1,7 +1,11 @@
 <template>
-  <el-container class="root-container">
+  <el-container class="root-container" :class="collapsed ? 'aside-min':'aside-max'">
     <!-- 左侧 -->
-    <left-aside :collapsed="collapsed" :menu-list="menuList" :show-logo="showLogo"/>
+    <left-aside 
+      :collapsed="collapsed" 
+      :menu-list="menuList" 
+      :show-logo="showLogo"
+    />
     <!-- 右侧 -->
     <div class="right-container">
       <!-- 顶部 -->
@@ -18,8 +22,15 @@
       </div>
       
       <!-- <footer-bar/> -->
+
+
       <!-- 右侧配置 -->
-      <right-panel/>
+      <right-panel 
+        :show-logo="showLogo" 
+        :fixed-header="fixedHeader"
+        @change-fixed-header="changeFixedHeader"
+        @change-show-logo="changeShowLogo"
+      />
     </div>
     
     
@@ -33,6 +44,7 @@ import HeaderBar from './header-bar'
 import FooterBar from './footer-bar'
 import RightPanel from './right-panel'
 import config from '@/config';
+
 export default {
   computed: {
     ...mapState({ 
@@ -46,7 +58,7 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations(["changeCollapsed"]),
+    ...mapMutations(["changeCollapsed",'changeShowLogo','changeFixedHeader']),
     ...mapActions([
       'handleLogOut',
     ]),
@@ -81,12 +93,19 @@ export default {
   height: 100%;
   .right-container{
     position: relative;
-    overflow: auto;
     min-height: 100%;
     flex:1;
+    transition: margin-left 0.3s;
     .main-container{
       padding:20px;
     }
+  }
+
+  &.aside-max > .right-container{
+    margin-left:$aside-open-width;
+  }
+  &.aside-min > .right-container{
+    margin-left:$aside-min-width;
   }
 
   

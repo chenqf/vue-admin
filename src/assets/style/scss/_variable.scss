@@ -3,6 +3,7 @@
 $aside-bg-color: #001529;
 $aside-color: rgba(255, 255, 255, 0.7);
 $aside-open-width: 260px;
+$aside-min-width: 65px;
 
 $aside-menu-bg-color-active:#2d8cf0;
 $aside-menu-color-active:#fff;
@@ -20,6 +21,9 @@ $header-border-color:#f0f0f0;
 $header-icon-color: #515a6e;
 $header-icon-color-hover: #57a3f3;
 
+
+/** 右侧悬浮配置项 **/
+$right-panel-width:300px;
 
 /** 底部 footer **/
 $footer-height: 64px;

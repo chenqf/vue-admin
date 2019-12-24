@@ -1,5 +1,5 @@
 <template>
-    <header class="header-bar">
+    <header class="header-bar" :class="fixedHeader ?'is-fixed':''">
         <div class="header-left">
             <i
                 class="el-icon-s-fold menu-control"
@@ -58,6 +58,13 @@ export default {
     justify-content: space-between;
     border-bottom: 1px solid $header-border-color;
     height: $header-height !important;
+
+    &.is-fixed{
+        position: sticky;
+        z-index: 1;
+        top:0;
+        background: #fff;
+    }
 
     & > .header-bread{
       flex:1;

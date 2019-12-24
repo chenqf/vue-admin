@@ -4,7 +4,7 @@ import config from '@/config'
 
 
 
-export const everyTime = (func,time,callback) => {
+export const everyTime = (func, time, callback) => {
   let key;
   let fn = function loop() {
     key = setTimeout(loop, time);
@@ -20,8 +20,50 @@ export const stopTime = key => {
 };
 
 
+/**
+ * Check if an element has a class
+ * @param {HTMLElement} elm
+ * @param {string} cls
+ * @returns {boolean}
+ */
+export function hasClass(ele, cls) {
+  return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'))
+}
+
+/**
+ * Add class to element
+ * @param {HTMLElement} elm
+ * @param {string} cls
+ */
+export function addClass(ele, cls) {
+  if (!hasClass(ele, cls)) ele.className += ' ' + cls
+}
+
+/**
+ * Remove class from element
+ * @param {HTMLElement} elm
+ * @param {string} cls
+ */
+export function removeClass(ele, cls) {
+  if (hasClass(ele, cls)) {
+    const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
+    ele.className = ele.className.replace(reg, ' ')
+  }
+}
+
+export const hasScrollbar = () => {
+  return document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
+}
 
 
+export const getScrollbarWidth = () => {
+  let scrollDiv = document.createElement("div");
+  scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;';
+  document.body.appendChild(scrollDiv);
+  let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  return scrollbarWidth;
+}
 
 
 /**
@@ -69,35 +111,38 @@ export const off = (function () {
  * @param wait 间隔的时间
  * @param opts leading 是否第一次执行 trailing 是否停止触发后执行
  */
-export const throttle = function (func,wait = 50,opts = {}) {
+export const throttle = function (func, wait = 50, opts = {}) {
   let preTime = 0,
-      timer = null,
-      { leading = false, trailing = true } = opts,
-      throttled = function (...args) {
-          let now = Date.now();
-          if(!leading && !preTime){
-              preTime = now;
-          }
-          // 没有剩余时间 || 修改了系统时间
-          if(now - preTime >= wait || preTime > now){
-              if(timer){
-                  clearTimeout(timer);
-                  timer = null;
-              }
-              preTime = now;
-              func.apply(this,args);
-          }else if(!timer && trailing){
-              timer = setTimeout(()=>{
-                  preTime = Date.now();
-                  timer = null;
-                  func.apply(this,args)
-              },wait - now + preTime);
-          }
-      };
+    timer = null,
+    {
+      leading = false,
+      trailing = true
+    } = opts,
+    throttled = function (...args) {
+      let now = Date.now();
+      if (!leading && !preTime) {
+        preTime = now;
+      }
+      // 没有剩余时间 || 修改了系统时间
+      if (now - preTime >= wait || preTime > now) {
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
+        preTime = now;
+        func.apply(this, args);
+      } else if (!timer && trailing) {
+        timer = setTimeout(() => {
+          preTime = Date.now();
+          timer = null;
+          func.apply(this, args)
+        }, wait - now + preTime);
+      }
+    };
   throttled.cancel = function () {
-      clearTimeout(timer);
-      timer = null;
-      preTime = 0;
+    clearTimeout(timer);
+    timer = null;
+    preTime = 0;
   };
   return throttled;
 };
@@ -110,33 +155,33 @@ export const throttle = function (func,wait = 50,opts = {}) {
  * @param wait 等待的时间
  * @param immediate 是否立即执行
  */
-export const debounce = function (func,wait = 50,immediate = false) {
+export const debounce = function (func, wait = 50, immediate = false) {
   // 缓存一个定时器id
   let timer = null;
   let result;
   let debounced = function (...args) {
-      // 如果已经设定过定时器了就清空上一次的定时器
-      if(timer) clearTimeout(timer);
-      if(immediate){
-          let callNow = !timer;
-          //等待wait的时间间隔后，timer为null的时候，函数才可以继续执行
-          timer = setTimeout(()=>{
-              timer = null;
-          },wait);
-          //未执行过，执行
-          if(callNow) result = func.apply(this,args);
-      }else{
-          // 开始一个定时器，延迟执行用户传入的方法
-          timer = setTimeout(()=>{
-              //将实际的this和参数传入用户实际调用的函数
-              func.apply(this,args);
-          },wait);
-      }
-      return result;
+    // 如果已经设定过定时器了就清空上一次的定时器
+    if (timer) clearTimeout(timer);
+    if (immediate) {
+      let callNow = !timer;
+      //等待wait的时间间隔后，timer为null的时候，函数才可以继续执行
+      timer = setTimeout(() => {
+        timer = null;
+      }, wait);
+      //未执行过，执行
+      if (callNow) result = func.apply(this, args);
+    } else {
+      // 开始一个定时器，延迟执行用户传入的方法
+      timer = setTimeout(() => {
+        //将实际的this和参数传入用户实际调用的函数
+        func.apply(this, args);
+      }, wait);
+    }
+    return result;
   };
-  debounced.cancel = function(){
-      clearTimeout(timer);
-      timer = null;
+  debounced.cancel = function () {
+    clearTimeout(timer);
+    timer = null;
   };
   // 这里返回的函数时每次用户实际调用的防抖函数
   return debounced;
@@ -148,18 +193,18 @@ export const hasOneOf = (targetArr, arr) => {
 }
 
 
-export const getTimestampFor = (str)=>{
+export const getTimestampFor = (str) => {
   let tag = str.slice(-1);
-  let num = Number(str.slice(0,-1));
-  if(tag === 'd'){
+  let num = Number(str.slice(0, -1));
+  if (tag === 'd') {
     return 24 * 60 * 60 * 1000 * num;
-  }else if(tag === 'h'){
+  } else if (tag === 'h') {
     return 60 * 60 * 1000 * num;
-  }else if(tag === 'm'){
+  } else if (tag === 'm') {
     return 60 * 1000 * num;
-  }else if(tag === 's'){
+  } else if (tag === 's') {
     return 1000 * num;
-  }else{
+  } else {
     return num;
   }
 }

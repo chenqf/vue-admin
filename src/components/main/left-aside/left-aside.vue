@@ -1,7 +1,7 @@
 <template>
-    <el-scrollbar>
+    <el-scrollbar class="aside-container">
         <el-aside class="left-aside">
-            <div class="aside-logo">Logo</div>
+            <div class="aside-logo" v-if="showLogo">Logo</div>
             <aside-menu :collapsed="collapsed" :menu-list="menuList" />
         </el-aside>
     </el-scrollbar>
@@ -31,6 +31,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.aside-container{
+    position: fixed;
+    z-index: 2;
+}
 
 .el-scrollbar{
     height: 100%;

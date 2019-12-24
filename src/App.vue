@@ -20,7 +20,8 @@ html,body{
   padding:0;
   height: 100%;
   width:100%;
-  overflow-x: hidden;
+  // overflow-x: hidden;
+  // overflow: auto;
 }
 #app {
   height: 100%;
