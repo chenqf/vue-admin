@@ -8,7 +8,7 @@
             />
         </div>
         <div class="header-bread">
-            
+            <bread-crumb :list="breadCrumbList"/>
         </div>
         <div class="header-right">
             <full-screen style="margin-right:10px"/>
@@ -20,8 +20,13 @@
 <script>
 import FullScreen from './full-screen.vue'
 import HeaderUser from './header-user.vue'
+import BreadCrumb from './bread-crumb.vue'
 export default {
     props:{
+        breadCrumbList:{
+            type:Array,
+            default:()=>[]
+        },
         collapsed:{
             type:Boolean,
             default:false
@@ -37,13 +42,15 @@ export default {
     },
     components: {
         FullScreen,
-        HeaderUser
+        HeaderUser,
+        BreadCrumb
     },
     methods:{
         selectOperate(item){
             this.$emit('select-operate',item)
         },
         changeCollapsed(){
+            console.log(this.breadCrumbList)
             this.$emit('update-collapsed')
         }
     }
@@ -68,6 +75,7 @@ export default {
 
     & > .header-bread{
       flex:1;
+      padding-left:30px;
     }
 
     & > .header-left{

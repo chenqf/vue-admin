@@ -13,6 +13,7 @@
         :collapsed="collapsed" 
         :avatar="avatarImage"
         :fixed-header="fixedHeader"
+        :bread-crumb-list="breadCrumbList"
         @update-collapsed="updateCollapsed" 
         @select-operate="selectOperate"
       />
@@ -39,6 +40,7 @@
 
 <script>
 import {mapGetters,mapState,mapMutations,mapActions } from 'vuex'
+import routes from '@/router/routers'
 import LeftAside from './left-aside'
 import HeaderBar from './header-bar'
 import FooterBar from './footer-bar'
@@ -51,14 +53,30 @@ export default {
         collapsed:state=>state.app.collapsed,
         showLogo:state=>state.app.showLogo,
         fixedHeader:state=>state.app.fixedHeader,
+        breadCrumbList:state=>state.app.breadCrumbList
     }),
     ...mapGetters([
       'menuList',
       'avatarImage'
     ])
   },
+  watch: {
+    '$route' (newRoute) {
+      this.setBreadCrumb(newRoute)
+    }
+  },
+  mounted () {
+    this.setHomeRoute(routes)
+    this.setBreadCrumb(this.$route);
+  },
   methods: {
-    ...mapMutations(["changeCollapsed",'changeShowLogo','changeFixedHeader']),
+    ...mapMutations([
+      "changeCollapsed",
+      'changeShowLogo',
+      'changeFixedHeader',
+      'setBreadCrumb',
+      'setHomeRoute',
+    ]),
     ...mapActions([
       'handleLogOut',
     ]),

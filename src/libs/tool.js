@@ -10,6 +10,61 @@ const {
 } = TOKEN;
 
 
+/**
+ * 根据首页name找到首页route对象
+ */
+export const getHomeRoute = (routers, homeName = 'home') => {
+  let i = -1
+  let len = routers.length
+  let homeRoute = {}
+  while (++i < len) {
+    let item = routers[i]
+    if (item.children && item.children.length) {
+      let res = getHomeRoute(item.children, homeName)
+      if (res.name){
+        return res
+      } 
+    } else {
+      if (item.name === homeName){
+        homeRoute = item
+      }
+    }
+  }
+  return homeRoute
+}
+
+
+/**
+ * 获取面包屑数据
+ */
+export const getBreadCrumbList = (route, homeRoute) => {
+  let homeItem = { ...homeRoute, icon: homeRoute.meta.icon }
+  let routeMatched = route.matched
+  if (routeMatched.some(item => item.name === homeRoute.name)){
+    return [homeItem]
+  } 
+  let res = routeMatched.filter(item => {
+    return item.meta === undefined || !item.meta.hideInBread
+  }).map(item => {
+    let meta = { ...item.meta }
+    // TOOD title 为函数
+    // if (meta.title && typeof meta.title === 'function') {
+    //   meta.__titleIsFunction__ = true
+    //   meta.title = meta.title(route)
+    // }
+    let obj = {
+      icon: (item.meta && item.meta.icon) || '',
+      name: item.name,
+      path:item.path,
+      meta: meta
+    }
+    return obj
+  })
+  // res = res.filter(item => {
+  //   return !item.meta.hideInMenu
+  // })
+  return [homeItem, ...res]
+}
 
 
 export const getToken = ()=>{
