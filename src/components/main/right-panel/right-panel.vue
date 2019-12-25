@@ -34,7 +34,6 @@ export default {
     },
   },
   data() {
-    console.log()
     return {
       drawer: false,
       showLogoSetting:this.showLogo,

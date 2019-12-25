@@ -78,7 +78,8 @@ export default [
         showAlways:true,
         access:['super'],
         icon:'el-icon-success',
-      },
+      }
+      ,
       children:[
         {
           path: 'super1',

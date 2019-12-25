@@ -50,7 +50,6 @@ export default {
             this.$emit('select-operate',item)
         },
         changeCollapsed(){
-            console.log(this.breadCrumbList)
             this.$emit('update-collapsed')
         }
     }
@@ -75,7 +74,7 @@ export default {
 
     & > .header-bread{
       flex:1;
-      padding-left:30px;
+      padding-left:40px;
     }
 
     & > .header-left{
