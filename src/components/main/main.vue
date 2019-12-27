@@ -17,9 +17,10 @@
         @update-collapsed="updateCollapsed" 
         @select-operate="selectOperate"
       />
+      <tag-nav></tag-nav>
       <!-- 内容区 -->
       <div class="main-container">
-        <tag-nav></tag-nav>
+        
         <keep-alive>
           <router-view />
         </keep-alive>
