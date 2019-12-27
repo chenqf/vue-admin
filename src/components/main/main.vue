@@ -19,7 +19,10 @@
       />
       <!-- 内容区 -->
       <div class="main-container">
-        <router-view />
+        <tag-nav></tag-nav>
+        <keep-alive>
+          <router-view />
+        </keep-alive>
       </div>
       
       <!-- <footer-bar/> -->
@@ -45,7 +48,8 @@ import LeftAside from './left-aside'
 import HeaderBar from './header-bar'
 import FooterBar from './footer-bar'
 import RightPanel from './right-panel'
-import config from '@/config';
+import TagNav from './tag-nav'
+import config from '@/config'; 
 
 export default {
   computed: {
@@ -97,6 +101,7 @@ export default {
     LeftAside,
     HeaderBar,
     RightPanel,
+    TagNav,
     // FooterBar,
   }
 };

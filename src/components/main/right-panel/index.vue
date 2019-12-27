@@ -63,7 +63,7 @@ export default {
     changeShowLogo(value){
       this.$emit('change-show-logo',value)
     }
-  }
+  } 
 };
 </script>
 

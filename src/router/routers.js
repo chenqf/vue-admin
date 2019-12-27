@@ -165,11 +165,11 @@ export default [
     },
     {
       path:'/demo',
-      name:'demo',
+      name:'_demo',
       component:Main,
       meta:{
         icon: 'el-icon-menu',
-        title: 'demo',
+        title: '_demo',
         showAlways:true
       },
       children:[
@@ -190,6 +190,15 @@ export default [
             title: '富文本编辑器'
           },
           component: () => import('@/view/demo/rich.vue')
+        },
+        {
+          path: 'demo',
+          name: 'demo',
+          meta: {
+            icon: 'el-icon-news',
+            title: 'demo'
+          },
+          component: () => import('@/view/demo/demo.vue')
         },
       ]
     },
