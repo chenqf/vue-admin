@@ -17,7 +17,7 @@
         @update-collapsed="updateCollapsed" 
         @select-operate="selectOperate"
       />
-      <tag-nav></tag-nav>
+      <tag-nav v-if="openTagNav"></tag-nav>
       <!-- 内容区 -->
       <div class="main-container">
         
@@ -33,6 +33,8 @@
       <right-panel 
         :show-logo="showLogo" 
         :fixed-header="fixedHeader"
+        :open-tag-nav="openTagNav"
+        @open-tag-nav="changeOpenTagNav"
         @change-fixed-header="changeFixedHeader"
         @change-show-logo="changeShowLogo"
       />
@@ -56,6 +58,7 @@ export default {
   computed: {
     ...mapState({ 
         collapsed:state=>state.app.collapsed,
+        openTagNav:state=>state.app.openTagNav,
         showLogo:state=>state.app.showLogo,
         fixedHeader:state=>state.app.fixedHeader,
         breadCrumbList:state=>state.app.breadCrumbList
@@ -78,6 +81,7 @@ export default {
     ...mapMutations([
       "changeCollapsed",
       'changeShowLogo',
+      'changeOpenTagNav',
       'changeFixedHeader',
       'setBreadCrumb',
       'setHomeRoute',

@@ -57,7 +57,7 @@ export default {
             line-height: $tag-nav-height;
             cursor: pointer;
             &:hover{
-                color: #57a3f3;
+                color: $tag-nav-btn-hover-color;
                 background-color: #fff;
                 border-color: transparent;
             }
@@ -96,8 +96,8 @@ export default {
                     height: 34px;
                     line-height: 34px;
                     border: 1px solid #e8eaec !important;
-                    color: #515a6e !important;
-                    background: #fff !important;
+                    color: $tag-nav-item-color;
+                    background: #fff;
                     padding: 0 12px;
                     margin: 2px 4px 2px 0;
                     border-radius: 3px;
@@ -115,15 +115,15 @@ export default {
                         display: inline-block;
                         margin-right:8px;
                         border-radius: 50%;
-                        background: #e8eaec;
+                        background: $tag-nav-item-icon-bg-color;
                         top:1px;
                         position: relative;
                     }
                     &.is-active > .tag-icon{
-                        background: #2D8cF0;
+                        background: $tag-nav-item-icon-active-bg-color;
                     }
                     & > .tag-title{
-                        color:#515a6e;
+ 
                     }
                     & > .tag-close{
                         font-size: 12px;

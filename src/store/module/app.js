@@ -15,6 +15,7 @@ const { homeName } = config.ROUTER
 
 const SHOW_LOGO_KEY = getToken() + '_SHOW_LOGO';
 const FIXED_HEADER_KEY = getToken() + '_FIXED_HEADER';
+const OPEN_TAG_NAV_KEY = getToken() + '_OPEN_TAG_NAV';
 
 
 
@@ -23,6 +24,7 @@ export default {
     breadCrumbList: [], // 面包屑
     homeRoute: {}, // 当前router
     collapsed: false,
+    openTagNav:cache.get(OPEN_TAG_NAV_KEY) !== 'false',
     showLogo: cache.get(SHOW_LOGO_KEY) !== 'false',
     fixedHeader: cache.get(FIXED_HEADER_KEY) === 'true',
   },
@@ -40,6 +42,10 @@ export default {
     },
     changeCollapsed(state, collapsed) {
       state.collapsed = !state.collapsed;
+    },
+    changeOpenTagNav(state, value) {
+      state.openTagNav = value;
+      cache.set(OPEN_TAG_NAV_KEY, value)
     },
     changeShowLogo(state, value) {
       state.showLogo = value;

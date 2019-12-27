@@ -8,12 +8,16 @@
       <div class="setting-main">
         <h3 class="drawer-title">系统布局配置</h3>
         <div class="drawer-item">
+          <span>显示标签栏</span>
+          <el-switch v-model="openTagNavSetting" @change="changeOpenTagNav"/>
+        </div>
+        <div class="drawer-item">
           <span>固定头部</span>
           <el-switch v-model="fixedHeaderSetting" @change="changeFixedHeader"/>
         </div>
         <div class="drawer-item">
           <span>显示Logo</span>
-          <el-switch v-model="showLogoSetting" @change="changeShowLogo"/>
+          <el-switch v-model="showLogoSetting" @change="changeOpenTagNav"/>
         </div>
       </div>
     </div>
@@ -28,6 +32,10 @@ export default {
       type:Boolean,
       default:true
     },
+    openTagNav:{
+      type:Boolean,
+      default:true
+    },
     fixedHeader:{
       type:Boolean,
       default:false
@@ -37,7 +45,8 @@ export default {
     return {
       drawer: false,
       showLogoSetting:this.showLogo,
-      fixedHeaderSetting:this.fixedHeader
+      fixedHeaderSetting:this.fixedHeader,
+      openTagNavSetting:this.openTagNav,
     };
   },
   watch: {
@@ -59,6 +68,9 @@ export default {
     },
     changeFixedHeader(value){
       this.$emit('change-fixed-header',value)
+    },
+    changeOpenTagNav(value){
+      this.$emit('open-tag-nav',value)
     },
     changeShowLogo(value){
       this.$emit('change-show-logo',value)
