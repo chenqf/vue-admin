@@ -22,6 +22,7 @@ const OPEN_TAG_NAV_KEY = getToken() + '_OPEN_TAG_NAV';
 export default {
   state: {
     breadCrumbList: [], // 面包屑
+    tagNavList: [],
     homeRoute: {}, // 当前router
     collapsed: false,
     openTagNav:cache.get(OPEN_TAG_NAV_KEY) !== 'false',
@@ -34,6 +35,12 @@ export default {
     }
   },
   mutations: {
+    closeTag(){
+
+    },
+    addTag(){
+
+    },
     setBreadCrumb(state, route) {
       state.breadCrumbList = getBreadCrumbList(route, state.homeRoute)
     },

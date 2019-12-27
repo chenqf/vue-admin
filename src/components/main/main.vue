@@ -17,10 +17,15 @@
         @update-collapsed="updateCollapsed" 
         @select-operate="selectOperate"
       />
-      <tag-nav v-if="openTagNav"></tag-nav>
+      <tag-nav 
+        v-if="openTagNav"
+        :value="$route"
+        :list="tagNavList"
+        @change-tag="changeTag"
+        @close-tag="closeTag"
+      />
       <!-- 内容区 -->
       <div class="main-container">
-        
         <keep-alive>
           <router-view />
         </keep-alive>
@@ -58,6 +63,7 @@ export default {
   computed: {
     ...mapState({ 
         collapsed:state=>state.app.collapsed,
+        tagNavList:state=>state.app.tagNavList,
         openTagNav:state=>state.app.openTagNav,
         showLogo:state=>state.app.showLogo,
         fixedHeader:state=>state.app.fixedHeader,
@@ -89,6 +95,12 @@ export default {
     ...mapActions([
       'handleLogOut',
     ]),
+    changeTag(value){
+
+    },
+    closeTag(value){
+
+    },
     updateCollapsed(){
       this.changeCollapsed();
     },
