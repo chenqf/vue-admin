@@ -29,7 +29,8 @@
       />
       <!-- 内容区 -->
       <div class="main-container">
-        <keep-alive>
+        <!-- 启用keep-alive需要保证routers中name与view中的name相同 -->
+        <keep-alive :include="cacheList">
           <router-view />
         </keep-alive>
       </div>
@@ -77,7 +78,12 @@ export default {
     ...mapGetters([
       'menuList',
       'avatarImage'
-    ])
+    ]),
+    cacheList () {
+      const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
+      console.log(list)
+      return list
+    },
   },
   watch: {
     '$route' (newRoute) {
