@@ -1,7 +1,7 @@
 import config from '@/config'
 import Cookie from 'js-cookie'
 
-import {  hasOneOf ,getTimestampFor} from '@/libs/util'
+import {  hasOneOf ,getTimestampFor,objEqual} from '@/libs/util'
 
 const {TOKEN,COOKIE_DOMAIN,BASE_TITLE} = config;
 const {
@@ -126,6 +126,33 @@ export const setTitle = (router,vm)=>{
   const pageTitle = (route.meta && route.meta.title) || route.name;
   const resTitle = pageTitle ? `${BASE_TITLE} - ${pageTitle}` : title
   window.document.title = resTitle
+}
+
+
+export const routeEqual = (route1, route2) => {
+  const params1 = route1.params || {}
+  const params2 = route2.params || {}
+  const query1 = route1.query || {}
+  const query2 = route2.query || {}
+  return (route1.name === route2.name) && objEqual(params1, params2) && objEqual(query1, query2)
+}
+
+export const routeHasExist = (tagNavList,routeItem)=>{
+  let len = tagNavList.length
+  while(len > 0){
+    if(routeEqual(tagNavList[len - 1],routeItem)){
+      return true;
+    }
+  }
+  return false;
+}
+
+export const getNewTagList = (list, newRoute) => {
+  const { name, path, meta } = newRoute
+  let newList = [...list]
+  if (newList.findIndex(item => item.name === name) >= 0) return newList
+  else newList.push({ name, path, meta })
+  return newList
 }
 
 

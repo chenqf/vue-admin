@@ -21,8 +21,8 @@
         v-if="openTagNav"
         :value="$route"
         :list="tagNavList"
-        @change-tag="changeTag"
-        @close-tag="closeTag"
+        @change-tag="changeTagEvent"
+        @close-tag="closeTagEvent"
       />
       <!-- 内容区 -->
       <div class="main-container">
@@ -57,6 +57,7 @@ import HeaderBar from './header-bar'
 import FooterBar from './footer-bar'
 import RightPanel from './right-panel'
 import TagNav from './tag-nav'
+import {getNewTagList} from '@/libs/tool'
 import config from '@/config'; 
 
 export default {
@@ -76,12 +77,29 @@ export default {
   },
   watch: {
     '$route' (newRoute) {
+      const { name, query, params, meta } = newRoute
+      this.addTag({
+        route: { name, query, params, meta },
+        type: 'push'
+      })
       this.setBreadCrumb(newRoute)
+      this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
     }
   },
   mounted () {
+    this.setTagNavList()
     this.setHomeRoute(routes)
+    const { name, params, query, meta } = this.$route
+    this.addTag({
+      route: { name, params, query, meta }
+    })
     this.setBreadCrumb(this.$route);
+    // 如果当前打开页面不在标签栏中，跳到homeName页
+    if (!this.tagNavList.find(item => item.name === this.$route.name)) {
+      this.$router.push({
+        name: config.ROUTER.HOME_NAME
+      })
+    }
   },
   methods: {
     ...mapMutations([
@@ -90,15 +108,18 @@ export default {
       'changeOpenTagNav',
       'changeFixedHeader',
       'setBreadCrumb',
+      'closeTag',
+      'addTag',
+      'setTagNavList',
       'setHomeRoute',
     ]),
     ...mapActions([
       'handleLogOut',
     ]),
-    changeTag(value){
+    changeTagEvent(value){
 
     },
-    closeTag(value){
+    closeTagEvent(value){
 
     },
     updateCollapsed(){
