@@ -13,15 +13,15 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div class="btn prev-con">
+      <div class="btn prev-con" @click="handleScroll(240)">
         <i class="el-icon-arrow-right"></i>
       </div>
-      <div class="btn next-con">
+      <div class="btn next-con" @click="handleScroll(-240)">
         <i class="el-icon-arrow-left"></i>
       </div>
-      <div class="scroll-outer">
-        <div class="scroll-body">
-          <div @click="changeTag(item)" v-for="item in list" :key="item.name" class="tag-item" :class="item.name === value.name ? 'is-active':''">
+      <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll.prevent="mouseHandlescroll" @mousewheel.prevent="mouseHandlescroll">
+        <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
+          <div ref="tagsPageOpened" :_name="item.name" @click="changeTag(item)" v-for="item in list" :key="item.name" class="tag-item" :class="item.name === value.name ? 'is-active':''">
             <span class="tag-icon"></span>
             <span class="tag-title">{{item.meta.title}}</span>
             <i v-if="item.name !== home.name" @click.stop="closeOneTag(item)" class="el-icon-close tag-close"></i>
@@ -33,7 +33,20 @@
 </template>
 
 <script>
+import {routeEqual} from '@/libs/tool'
 export default {
+  data(){
+    return {
+      tagBodyLeft: 0,
+      outerPadding:4
+    }
+  },
+  computed: {
+    currentRouteObj () {
+      const { name, params, query } = this.value
+      return { name, params, query }
+    }
+  },
   props:{
       list:{
           type:Array,
@@ -48,15 +61,78 @@ export default {
         default:()=>{}
       }
   },
+  '$route' (to) {
+    this.getTagElementByRoute(to)
+  },
+  mounted () {
+    setTimeout(() => {
+      this.getTagElementByRoute(this.$route)
+    }, 200)
+  },
   methods: {
-    //close-one-tag
-    //close-all-tag
-    //close-other-tag
+    moveToView(tag){
+      const outerWidth = this.$refs.scrollOuter.offsetWidth
+      const bodyWidth = this.$refs.scrollBody.offsetWidth
+      if (bodyWidth < outerWidth) {
+        this.tagBodyLeft = 0
+      } else if (tag.offsetLeft < -this.tagBodyLeft) {
+        // 标签在可视区域左侧
+        this.tagBodyLeft = -tag.offsetLeft + this.outerPadding
+      } else if (tag.offsetLeft > -this.tagBodyLeft && tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + outerWidth) {
+        // 标签在可视区域
+        this.tagBodyLeft = Math.min(0, outerWidth - tag.offsetWidth - tag.offsetLeft - this.outerPadding)
+      } else {
+        // 标签在可视区域右侧
+        this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.outerPadding - tag.offsetWidth))
+      }
+    },
+    getTagElementByRoute (route) {
+      this.$nextTick(() => {
+        this.refsTag = this.$refs.tagsPageOpened
+        this.refsTag.forEach((item, index) => {
+          if (routeEqual(route, {name:item.getAttribute('_name')})) {
+            let tag = this.refsTag[index]
+            this.moveToView(tag)
+          }
+        })
+      })
+    },
+    mouseHandlescroll(e){
+      let type = e.type
+      let delta = 0
+      if (type === 'DOMMouseScroll' || type === 'mousewheel') {
+        delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
+      }
+      this.handleScroll(delta)
+    },
+    handleScroll(offset){
+      const outerWidth = this.$refs.scrollOuter.offsetWidth
+      const bodyWidth = this.$refs.scrollBody.offsetWidth
+      if (offset > 0) {
+        this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset)
+      } else {
+        if (outerWidth < bodyWidth) {
+          if (this.tagBodyLeft < -(bodyWidth - outerWidth)) {
+            this.tagBodyLeft = this.tagBodyLeft
+          } else {
+            this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, outerWidth - bodyWidth)
+          }
+        } else {
+          this.tagBodyLeft = 0
+        }
+      }
+    },
     closeOneTag(value) {
       this.$emit("close-one-tag", value);
+      setTimeout(() => {
+        this.getTagElementByRoute(this.currentRouteObj)
+      }, 100)
     },
     changeTag(value) {
       this.$emit("change-tag", value);
+      setTimeout(() => {
+        this.getTagElementByRoute(this.currentRouteObj)
+      }, 100)
     },
     handleCommand(value) {
       if(value === 'all'){
@@ -64,6 +140,9 @@ export default {
       }else{
         this.$emit("close-other-tag");
       }
+      setTimeout(() => {
+        this.getTagElementByRoute(this.currentRouteObj)
+      }, 100)
     }
   }
 };
@@ -122,6 +201,7 @@ export default {
       right: $tag-nav-close-btn-width + $tag-nav-next-btn-width;
       top: 0;
       bottom: 0;
+      overflow: hidden;
       box-shadow: 0px 0 3px 2px rgba(100, 100, 100, 0.1) inset;
       & > .scroll-body {
         height: calc(100% - 1px);
@@ -163,6 +243,7 @@ export default {
             background: $tag-nav-item-icon-active-bg-color;
           }
           & > .tag-title {
+            user-select: none;
           }
           & > .tag-close {
             font-size: 12px;
