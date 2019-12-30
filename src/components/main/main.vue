@@ -21,8 +21,11 @@
         v-if="openTagNav"
         :value="$route"
         :list="tagNavList"
+        :home="homeRoute"
         @change-tag="changeTagEvent"
-        @close-tag="closeTagEvent"
+        @close-one-tag="closeTagEvent"
+        @close-all-tag="closeAllTagEvent"
+        @close-other-tag="closeOtherTagEvent"
       />
       <!-- 内容区 -->
       <div class="main-container">
@@ -57,12 +60,13 @@ import HeaderBar from './header-bar'
 import FooterBar from './footer-bar'
 import RightPanel from './right-panel'
 import TagNav from './tag-nav'
-import {getNewTagList} from '@/libs/tool'
+import {getNewTagList,routeEqual} from '@/libs/tool'
 import config from '@/config'; 
 
 export default {
   computed: {
     ...mapState({ 
+        homeRoute:state=>state.app.homeRoute,
         collapsed:state=>state.app.collapsed,
         tagNavList:state=>state.app.tagNavList,
         openTagNav:state=>state.app.openTagNav,
@@ -95,11 +99,11 @@ export default {
     })
     this.setBreadCrumb(this.$route);
     // 如果当前打开页面不在标签栏中，跳到homeName页
-    if (!this.tagNavList.find(item => item.name === this.$route.name)) {
-      this.$router.push({
-        name: config.ROUTER.HOME_NAME
-      })
-    }
+    // if (!this.tagNavList.find(item => item.name === this.$route.name)) {
+    //   this.$router.push({
+    //     name: config.ROUTER.HOME_NAME
+    //   })
+    // }
   },
   methods: {
     ...mapMutations([
@@ -116,11 +120,43 @@ export default {
     ...mapActions([
       'handleLogOut',
     ]),
-    changeTagEvent(value){
-
+    changeTagEvent(route){
+      let {
+        name,
+        params,
+        query
+      } = route;
+      this.$router.push({
+        name,
+        params,
+        query
+      })
     },
-    closeTagEvent(value){
-
+    //关闭单一tag TODO 考虑beforeClose的问题
+    closeTagEvent(route){
+      //关闭的是当前打开的
+      if(routeEqual(route,this.$route)){
+        const index = this.tagNavList.findIndex(item => routeEqual(item, route))
+        let nextRoute;
+        if(index === this.tagNavList.length - 1){
+          nextRoute = this.tagNavList[index - 1]
+        }else{
+          nextRoute = this.tagNavList[index + 1]
+        }
+        this.$router.push(nextRoute);
+      }
+      this.setTagNavList(this.tagNavList.filter(i=>!routeEqual(i,route)))
+    },
+    //关闭所有tag TODO 考虑beforeClose的问题
+    closeAllTagEvent(){
+      let res = this.tagNavList.filter(item => item.name === config.ROUTER.HOME_NAME)
+      this.setTagNavList(res)
+      this.$router.push({name:config.ROUTER.HOME_NAME})
+    },
+    //关闭其他tag TODO 考虑beforeClose的问题
+    closeOtherTagEvent(){
+      let res = this.tagNavList.filter(item => routeEqual(item,this.$route) || item.name === config.ROUTER.HOME_NAME)
+      this.setTagNavList(res)
     },
     updateCollapsed(){
       this.changeCollapsed();

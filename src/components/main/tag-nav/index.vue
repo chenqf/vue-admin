@@ -21,15 +21,10 @@
       </div>
       <div class="scroll-outer">
         <div class="scroll-body">
-          <div @click="changeTag" class="tag-item is-active">
+          <div @click="changeTag(item)" v-for="item in list" :key="item.name" class="tag-item" :class="item.name === value.name ? 'is-active':''">
             <span class="tag-icon"></span>
-            <span class="tag-title">首页</span>
-            <i @click.stop="closeTag" class="el-icon-close tag-close"></i>
-          </div>
-          <div @click="changeTag" class="tag-item">
-            <span class="tag-icon"></span>
-            <span class="tag-title">新建</span>
-            <i @click.stop="closeTag" class="el-icon-close tag-close"></i>
+            <span class="tag-title">{{item.meta.title}}</span>
+            <i v-if="item.name !== home.name" @click.stop="closeOneTag(item)" class="el-icon-close tag-close"></i>
           </div>
         </div>
       </div>
@@ -47,17 +42,28 @@ export default {
       value:{
           type:Object,
           default:()=>{}
+      },
+      home:{
+        type:Object,
+        default:()=>{}
       }
   },
   methods: {
-    closeTag(value) {
-      this.$emit("close-tag", value);
+    //close-one-tag
+    //close-all-tag
+    //close-other-tag
+    closeOneTag(value) {
+      this.$emit("close-one-tag", value);
     },
     changeTag(value) {
       this.$emit("change-tag", value);
     },
     handleCommand(value) {
-      console.log(value);
+      if(value === 'all'){
+        this.$emit("close-all-tag");
+      }else{
+        this.$emit("close-other-tag");
+      }
     }
   }
 };

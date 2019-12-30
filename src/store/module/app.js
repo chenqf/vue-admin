@@ -3,7 +3,10 @@ import {
   getRouteTitleHandled,
   getToken,
   getBreadCrumbList,
-  getHomeRoute
+  getHomeRoute,
+  routeHasExist,
+  getTagNavListFromLocalStorage,
+  setTagNavListInLocalStorage,
 } from '@/libs/tool'
 
 import cache from '@/libs/localCache'
@@ -50,6 +53,7 @@ export default {
         else{
           state.tagNavList.splice(1, 0, router)
         } 
+        setTagNavListInLocalStorage([...state.tagNavList])
       }
     },
     setTagNavList(state,list){
@@ -57,7 +61,7 @@ export default {
       if(list){
         tagList = [...list]
       }else{
-        //TODO 从本地获取
+        tagList = getTagNavListFromLocalStorage() || []
       }
       //首页在tag中的索引
       let homeTagIndex = tagList.findIndex(item => item.name === HOME_NAME);
@@ -66,6 +70,7 @@ export default {
         tagList.unshift(homeTag)
       }
       state.tagNavList = tagList
+      setTagNavListInLocalStorage([...tagList])
     },
     setBreadCrumb(state, route) {
       state.breadCrumbList = getBreadCrumbList(route, state.homeRoute)

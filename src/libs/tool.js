@@ -137,12 +137,27 @@ export const routeEqual = (route1, route2) => {
   return (route1.name === route2.name) && objEqual(params1, params2) && objEqual(query1, query2)
 }
 
+/**
+ * @description 本地存储和获取标签导航列表
+ */
+export const setTagNavListInLocalStorage = list => {
+  localStorage.setItem('tagNaveList',JSON.stringify(list))
+}
+/**
+ * @returns {Array} 其中的每个元素只包含路由原信息中的name, path, meta三项
+ */
+export const getTagNavListFromLocalStorage = () => {
+  const list = localStorage.getItem('tagNaveList');
+  return list ? JSON.parse(list) : []
+}
+
 export const routeHasExist = (tagNavList,routeItem)=>{
   let len = tagNavList.length
   while(len > 0){
     if(routeEqual(tagNavList[len - 1],routeItem)){
       return true;
     }
+    len--;
   }
   return false;
 }
