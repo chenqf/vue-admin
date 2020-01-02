@@ -39,9 +39,6 @@ export default {
     }
   },
   mutations: {
-    closeTag(state, route) {
-
-    },
     addTag (state, { route, type = 'unshift' }) {
       let router = getRouteTitleHandled(route)
       if (!routeHasExist(state.tagNavList, router)) {
