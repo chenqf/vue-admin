@@ -12,7 +12,7 @@ import './registerServiceWorker'
 
 //TODO 开发环境-引入mock
 if(config.DEBUG){
-  require('@/mock')
+  require('@/mock') 
   Vue.config.productionTip = false
 }else{
   Vue.config.productionTip = true

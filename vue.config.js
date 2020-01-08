@@ -2,6 +2,7 @@ const path = require('path')
 const merge = require('webpack-merge')
 
 module.exports = {
+  lintOnSave: true,
   configureWebpack: {
     resolve: {
       alias: {
