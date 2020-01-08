@@ -19,12 +19,33 @@
       <div class="btn next-con" @click="handleScroll(-240)">
         <i class="el-icon-arrow-left"></i>
       </div>
-      <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll.prevent="mouseHandlescroll" @mousewheel.prevent="mouseHandlescroll">
-        <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
-          <div ref="tagsPageOpened" :_name="item.name" @click="changeTag(item)" v-for="item in list" :key="item.name" class="tag-item" :class="item.name === value.name ? 'is-active':''">
+      <div
+        class="scroll-outer"
+        ref="scrollOuter"
+        @DOMMouseScroll.prevent="mouseHandlescroll"
+        @mousewheel.prevent="mouseHandlescroll"
+      >
+        <div
+          ref="scrollBody"
+          class="scroll-body"
+          :style="{ left: tagBodyLeft + 'px' }"
+        >
+          <div
+            ref="tagsPageOpened"
+            :_name="item.name"
+            @click="changeTag(item)"
+            v-for="item in list"
+            :key="item.name"
+            class="tag-item"
+            :class="item.name === value.name ? 'is-active' : ''"
+          >
             <span class="tag-icon"></span>
-            <span class="tag-title">{{item.meta.title}}</span>
-            <i v-if="item.name !== home.name" @click.stop="closeOneTag(item)" class="el-icon-close tag-close"></i>
+            <span class="tag-title">{{ item.meta.title }}</span>
+            <i
+              v-if="item.name !== home.name"
+              @click.stop="closeOneTag(item)"
+              class="el-icon-close tag-close"
+            ></i>
           </div>
         </div>
       </div>
@@ -33,116 +54,128 @@
 </template>
 
 <script>
-import {routeEqual} from '@/libs/tool'
+import { routeEqual } from "@/libs/tool";
 export default {
-  data(){
+  data() {
     return {
       tagBodyLeft: 0,
-      outerPadding:4
-    }
+      outerPadding: 4
+    };
   },
   computed: {
-    currentRouteObj () {
-      const { name, params, query } = this.value
-      return { name, params, query }
+    currentRouteObj() {
+      const { name, params, query } = this.value;
+      return { name, params, query };
     }
   },
-  props:{
-      list:{
-          type:Array,
-          default:()=>[]
-      },
-      value:{
-          type:Object,
-          default:()=>{}
-      },
-      home:{
-        type:Object,
-        default:()=>{}
-      }
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    },
+    value: {
+      type: Object,
+      default: () => {}
+    },
+    home: {
+      type: Object,
+      default: () => {}
+    }
   },
-  '$route' (to) {
-    this.getTagElementByRoute(to)
+  $route(to) {
+    this.getTagElementByRoute(to);
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
-      this.getTagElementByRoute(this.$route)
-    }, 200)
+      this.getTagElementByRoute(this.$route);
+    }, 200);
   },
   methods: {
-    moveToView(tag){
-      const outerWidth = this.$refs.scrollOuter.offsetWidth
-      const bodyWidth = this.$refs.scrollBody.offsetWidth
+    moveToView(tag) {
+      const outerWidth = this.$refs.scrollOuter.offsetWidth;
+      const bodyWidth = this.$refs.scrollBody.offsetWidth;
       if (bodyWidth < outerWidth) {
-        this.tagBodyLeft = 0
+        this.tagBodyLeft = 0;
       } else if (tag.offsetLeft < -this.tagBodyLeft) {
         // 标签在可视区域左侧
-        this.tagBodyLeft = -tag.offsetLeft + this.outerPadding
-      } else if (tag.offsetLeft > -this.tagBodyLeft && tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + outerWidth) {
+        this.tagBodyLeft = -tag.offsetLeft + this.outerPadding;
+      } else if (
+        tag.offsetLeft > -this.tagBodyLeft &&
+        tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + outerWidth
+      ) {
         // 标签在可视区域
-        this.tagBodyLeft = Math.min(0, outerWidth - tag.offsetWidth - tag.offsetLeft - this.outerPadding)
+        this.tagBodyLeft = Math.min(
+          0,
+          outerWidth - tag.offsetWidth - tag.offsetLeft - this.outerPadding
+        );
       } else {
         // 标签在可视区域右侧
-        this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.outerPadding - tag.offsetWidth))
+        this.tagBodyLeft = -(
+          tag.offsetLeft -
+          (outerWidth - this.outerPadding - tag.offsetWidth)
+        );
       }
     },
-    getTagElementByRoute (route) {
+    getTagElementByRoute(route) {
       this.$nextTick(() => {
-        this.refsTag = this.$refs.tagsPageOpened
+        this.refsTag = this.$refs.tagsPageOpened;
         this.refsTag.forEach((item, index) => {
-          if (routeEqual(route, {name:item.getAttribute('_name')})) {
-            let tag = this.refsTag[index]
-            this.moveToView(tag)
+          if (routeEqual(route, { name: item.getAttribute("_name") })) {
+            let tag = this.refsTag[index];
+            this.moveToView(tag);
           }
-        })
-      })
+        });
+      });
     },
-    mouseHandlescroll(e){
-      let type = e.type
-      let delta = 0
-      if (type === 'DOMMouseScroll' || type === 'mousewheel') {
-        delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
+    mouseHandlescroll(e) {
+      let type = e.type;
+      let delta = 0;
+      if (type === "DOMMouseScroll" || type === "mousewheel") {
+        delta = e.wheelDelta ? e.wheelDelta : -(e.detail || 0) * 40;
       }
-      this.handleScroll(delta)
+      this.handleScroll(delta);
     },
-    handleScroll(offset){
-      const outerWidth = this.$refs.scrollOuter.offsetWidth
-      const bodyWidth = this.$refs.scrollBody.offsetWidth
+    handleScroll(offset) {
+      const outerWidth = this.$refs.scrollOuter.offsetWidth;
+      const bodyWidth = this.$refs.scrollBody.offsetWidth;
       if (offset > 0) {
-        this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset)
+        this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset);
       } else {
         if (outerWidth < bodyWidth) {
           if (this.tagBodyLeft < -(bodyWidth - outerWidth)) {
-            this.tagBodyLeft = this.tagBodyLeft
+            this.tagBodyLeft = this.tagBodyLeft;
           } else {
-            this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, outerWidth - bodyWidth)
+            this.tagBodyLeft = Math.max(
+              this.tagBodyLeft + offset,
+              outerWidth - bodyWidth
+            );
           }
         } else {
-          this.tagBodyLeft = 0
+          this.tagBodyLeft = 0;
         }
       }
     },
     closeOneTag(value) {
       this.$emit("close-one-tag", value);
       setTimeout(() => {
-        this.getTagElementByRoute(this.currentRouteObj)
-      }, 100)
+        this.getTagElementByRoute(this.currentRouteObj);
+      }, 100);
     },
     changeTag(value) {
       this.$emit("change-tag", value);
       setTimeout(() => {
-        this.getTagElementByRoute(this.currentRouteObj)
-      }, 100)
+        this.getTagElementByRoute(this.currentRouteObj);
+      }, 100);
     },
     handleCommand(value) {
-      if(value === 'all'){
+      if (value === "all") {
         this.$emit("close-all-tag");
-      }else{
+      } else {
         this.$emit("close-other-tag");
       }
       setTimeout(() => {
-        this.getTagElementByRoute(this.currentRouteObj)
-      }, 100)
+        this.getTagElementByRoute(this.currentRouteObj);
+      }, 100);
     }
   }
 };

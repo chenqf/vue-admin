@@ -1,3 +1,3 @@
 <template>
-    <span>white2</span>
+  <span>white2</span>
 </template>

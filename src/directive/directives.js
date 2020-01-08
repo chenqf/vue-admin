@@ -1,9 +1,9 @@
-import focus from './module/focus'
-import highlight from './module/highlight'
-import clipboard from './module/clipboard'
-import resize from './module/resize'
-import price from './module/price'
-import permission from './module/permission'
+import focus from "./module/focus";
+import highlight from "./module/highlight";
+import clipboard from "./module/clipboard";
+import resize from "./module/resize";
+import price from "./module/price";
+import permission from "./module/permission";
 
 const directives = {
   focus,
@@ -11,7 +11,7 @@ const directives = {
   clipboard,
   resize,
   price,
-  permission,
-}
+  permission
+};
 
-export default directives
+export default directives;

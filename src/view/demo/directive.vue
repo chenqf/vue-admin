@@ -5,10 +5,16 @@
       <el-input v-focus />
       <code-format :text="focus_text" />
     </div>
-    <div class="demo"> 
+    <div class="demo">
       <span class="title">复制到剪切板:</span>
       <el-input placeholder="请输入内容" v-model="copy_value">
-        <el-button slot="append" v-clipboard:error="copyError" v-clipboard:success="copySuccess" v-clipboard:copy="copy_value" >copy</el-button>
+        <el-button
+          slot="append"
+          v-clipboard:error="copyError"
+          v-clipboard:success="copySuccess"
+          v-clipboard:copy="copy_value"
+          >copy</el-button
+        >
       </el-input>
       <code-format :text="copy_html_text" />
       <code-format :text="copy_js_text" />
@@ -19,15 +25,13 @@
       <code-format :text="resize_html_text" />
       <code-format :text="resize_js_text" />
     </div> -->
-    <div class="demo" > 
+    <div class="demo">
       <span class="title">数字转为千分位：</span>
       <p v-price>19881006</p>
       <code-format :text="'<p v-price>19881006</p>'" />
     </div>
-    
   </div>
 </template>
-
 
 <script>
 import CodeFormat from "_c/dev/code-format.vue";
@@ -65,13 +69,12 @@ const copy_html_text = `
   </el-button>
 </el-input>`;
 
-const resize_html_text = `<textarea v-resize:throttle.200="onResize" rows="10" cols="20"/>`
-const resize_js_text = 
-`methods:{
+const resize_html_text = `<textarea v-resize:throttle.200="onResize" rows="10" cols="20"/>`;
+const resize_js_text = `methods:{
   onResize(el){
     //...
   }
-}`
+}`;
 
 export default {
   data() {
@@ -82,7 +85,7 @@ export default {
       copy_js_text,
       resize_html_text,
       resize_js_text,
-      resize_value:'拖拽改变宽高'
+      resize_value: "拖拽改变宽高"
     };
   },
   computed: {
@@ -105,22 +108,22 @@ export default {
       };
     }
   },
-  methods:{
-    copySuccess(){
+  methods: {
+    copySuccess() {
       this.$notify({
         title: "成功",
         message: "复制成功",
         type: "success"
       });
     },
-    copyError(){
+    copyError() {
       this.$notify.error({
         title: "错误",
         message: "复制失败"
       });
     },
-    onResize(el){
-      this.resize_value = `宽度：${el.offsetWidth};高度：${el.offsetHeight}`
+    onResize(el) {
+      this.resize_value = `宽度：${el.offsetWidth};高度：${el.offsetHeight}`;
     }
   },
   components: {
@@ -128,7 +131,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 .demo-container {

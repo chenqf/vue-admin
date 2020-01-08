@@ -1,3 +1,3 @@
 <template>
-    <span>admin2</span>
+  <span>admin2</span>
 </template>

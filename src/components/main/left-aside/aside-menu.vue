@@ -22,8 +22,8 @@ export default {
     menuList: {
       type: Array,
       default: () => []
-    } 
-  }, 
+    }
+  },
   components: {
     AsideMenuList
   },
@@ -47,8 +47,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .el-menu.aside-menu,
 .el-menu.aside-menu .el-menu--inline {
   background-color: $aside-bg-color;
@@ -91,13 +89,13 @@ export default {
         background-color: $aside-menu-bg-color-hover;
         color: $aside-menu-color-hover;
         & > i {
-          color:$aside-menu-color-hover;
+          color: $aside-menu-color-hover;
         }
       }
       // 父菜单中有被选中
       &.is-active {
         & > .el-submenu__title {
-          background-color:$aside-bg-color;
+          background-color: $aside-bg-color;
           color: $aside-menu-color-active;
           & > i {
             color: $aside-menu-color-active;
@@ -121,17 +119,17 @@ export default {
     }
     // 复合标签
     & > div > li.el-submenu > .el-submenu__title {
-        &:hover{
-          background: $aside-menu-min-bg-color;
-        }
-        & > *{
-          display: none;
-        }
+      &:hover {
+        background: $aside-menu-min-bg-color;
+      }
+      & > * {
+        display: none;
+      }
 
-        & > i:first-child{
-          color:$aside-menu-min-color;
-          display: inline;
-        }
+      & > i:first-child {
+        color: $aside-menu-min-color;
+        display: inline;
+      }
     }
   }
 }

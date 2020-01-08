@@ -1,17 +1,11 @@
 <template>
-    <div>
-        code : 404    
-    </div>    
+  <div>
+    code : 404
+  </div>
 </template>
 
-
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

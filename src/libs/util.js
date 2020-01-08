@@ -1,24 +1,19 @@
-import config from '@/config'
-
-
-
-
+import config from "@/config";
 
 export const everyTime = (func, time, callback) => {
   let key;
   let fn = function loop() {
     key = setTimeout(loop, time);
     func();
-    callback(key)
+    callback(key);
   };
   key = setTimeout(fn, time);
-  callback(key)
+  callback(key);
 };
 
 export const stopTime = key => {
   window.clearTimeout(key);
 };
-
 
 /**
  * Check if an element has a class
@@ -27,7 +22,7 @@ export const stopTime = key => {
  * @returns {boolean}
  */
 export function hasClass(ele, cls) {
-  return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'))
+  return !!ele.className.match(new RegExp("(\\s|^)" + cls + "(\\s|$)"));
 }
 
 /**
@@ -36,7 +31,7 @@ export function hasClass(ele, cls) {
  * @param {string} cls
  */
 export function addClass(ele, cls) {
-  if (!hasClass(ele, cls)) ele.className += ' ' + cls
+  if (!hasClass(ele, cls)) ele.className += " " + cls;
 }
 
 /**
@@ -46,74 +41,74 @@ export function addClass(ele, cls) {
  */
 export function removeClass(ele, cls) {
   if (hasClass(ele, cls)) {
-    const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
-    ele.className = ele.className.replace(reg, ' ')
+    const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+    ele.className = ele.className.replace(reg, " ");
   }
 }
 
 export const objEqual = (obj1, obj2) => {
-  const keysArr1 = Object.keys(obj1)
-  const keysArr2 = Object.keys(obj2)
-  if (keysArr1.length !== keysArr2.length) return false
-  else if (keysArr1.length === 0 && keysArr2.length === 0) return true
-  /* eslint-disable-next-line */
-  else return !keysArr1.some(key => obj1[key] != obj2[key])
-}
-
+  const keysArr1 = Object.keys(obj1);
+  const keysArr2 = Object.keys(obj2);
+  if (keysArr1.length !== keysArr2.length) return false;
+  else if (keysArr1.length === 0 && keysArr2.length === 0) return true;
+  /* eslint-disable-next-line */ else
+    return !keysArr1.some(key => obj1[key] != obj2[key]);
+};
 
 export const hasScrollbar = () => {
-  return document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
-}
-
+  return (
+    document.body.scrollHeight >
+    (window.innerHeight || document.documentElement.clientHeight)
+  );
+};
 
 export const getScrollbarWidth = () => {
   let scrollDiv = document.createElement("div");
-  scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;';
+  scrollDiv.style.cssText =
+    "width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;";
   document.body.appendChild(scrollDiv);
   let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
   document.body.removeChild(scrollDiv);
   return scrollbarWidth;
-}
-
+};
 
 /**
  * 绑定事件 on(element, event, handler)
  */
-export const on = (function () {
+export const on = (function() {
   if (document.addEventListener) {
-    return function (element, event, handler) {
+    return function(element, event, handler) {
       if (element && event && handler) {
-        element.addEventListener(event, handler, false)
+        element.addEventListener(event, handler, false);
       }
-    }
+    };
   } else {
-    return function (element, event, handler) {
+    return function(element, event, handler) {
       if (element && event && handler) {
-        element.attachEvent('on' + event, handler)
+        element.attachEvent("on" + event, handler);
       }
-    }
+    };
   }
-})()
+})();
 
 /**
  * 解绑事件 off(element, event, handler)
  */
-export const off = (function () {
+export const off = (function() {
   if (document.removeEventListener) {
-    return function (element, event, handler) {
+    return function(element, event, handler) {
       if (element && event) {
-        element.removeEventListener(event, handler, false)
+        element.removeEventListener(event, handler, false);
       }
-    }
+    };
   } else {
-    return function (element, event, handler) {
+    return function(element, event, handler) {
       if (element && event) {
-        element.detachEvent('on' + event, handler)
+        element.detachEvent("on" + event, handler);
       }
-    }
+    };
   }
-})()
-
+})();
 
 /**
  * 节流函数
@@ -121,14 +116,11 @@ export const off = (function () {
  * @param wait 间隔的时间
  * @param opts leading 是否第一次执行 trailing 是否停止触发后执行
  */
-export const throttle = function (func, wait = 50, opts = {}) {
+export const throttle = function(func, wait = 50, opts = {}) {
   let preTime = 0,
     timer = null,
-    {
-      leading = false,
-      trailing = true
-    } = opts,
-    throttled = function (...args) {
+    { leading = false, trailing = true } = opts,
+    throttled = function(...args) {
       let now = Date.now();
       if (!leading && !preTime) {
         preTime = now;
@@ -145,11 +137,11 @@ export const throttle = function (func, wait = 50, opts = {}) {
         timer = setTimeout(() => {
           preTime = Date.now();
           timer = null;
-          func.apply(this, args)
+          func.apply(this, args);
         }, wait - now + preTime);
       }
     };
-  throttled.cancel = function () {
+  throttled.cancel = function() {
     clearTimeout(timer);
     timer = null;
     preTime = 0;
@@ -157,19 +149,17 @@ export const throttle = function (func, wait = 50, opts = {}) {
   return throttled;
 };
 
-
-
 /**
  * 防抖函数
  * @param func 用户传入的防抖函数
  * @param wait 等待的时间
  * @param immediate 是否立即执行
  */
-export const debounce = function (func, wait = 50, immediate = false) {
+export const debounce = function(func, wait = 50, immediate = false) {
   // 缓存一个定时器id
   let timer = null;
   let result;
-  let debounced = function (...args) {
+  let debounced = function(...args) {
     // 如果已经设定过定时器了就清空上一次的定时器
     if (timer) clearTimeout(timer);
     if (immediate) {
@@ -189,7 +179,7 @@ export const debounce = function (func, wait = 50, immediate = false) {
     }
     return result;
   };
-  debounced.cancel = function () {
+  debounced.cancel = function() {
     clearTimeout(timer);
     timer = null;
   };
@@ -197,24 +187,22 @@ export const debounce = function (func, wait = 50, immediate = false) {
   return debounced;
 };
 
-
 export const hasOneOf = (targetArr, arr) => {
-  return targetArr.some(_ => arr.indexOf(_) > -1)
-}
+  return targetArr.some(_ => arr.indexOf(_) > -1);
+};
 
-
-export const getTimestampFor = (str) => {
+export const getTimestampFor = str => {
   let tag = str.slice(-1);
   let num = Number(str.slice(0, -1));
-  if (tag === 'd') {
+  if (tag === "d") {
     return 24 * 60 * 60 * 1000 * num;
-  } else if (tag === 'h') {
+  } else if (tag === "h") {
     return 60 * 60 * 1000 * num;
-  } else if (tag === 'm') {
+  } else if (tag === "m") {
     return 60 * 1000 * num;
-  } else if (tag === 's') {
+  } else if (tag === "s") {
     return 1000 * num;
   } else {
     return num;
   }
-}
+};

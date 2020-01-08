@@ -1,3 +1,3 @@
 <template>
-    <span>super1</span>
+  <span>super1</span>
 </template>

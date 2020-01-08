@@ -5,66 +5,70 @@
         <span>欢迎登陆</span>
       </div>
       <el-form ref="form" :model="form" class="login-body">
-        <el-form-item 
+        <el-form-item
           prop="name"
-          :rules="[
-            { required: true, message: '用户名不能为空'}
-          ]"
+          :rules="[{ required: true, message: '用户名不能为空' }]"
         >
           <el-input placeholder="请输入用户名" v-model="form.name">
-            <template slot="prepend" style="padding: 0 10px;"><i class="el-icon-user-solid"></i></template>
+            <template slot="prepend" style="padding: 0 10px;"
+              ><i class="el-icon-user-solid"></i
+            ></template>
           </el-input>
         </el-form-item>
-        <el-form-item 
+        <el-form-item
           prop="password"
-          :rules="[
-            { required: true, message: '密码不能为空'}
-          ]"
+          :rules="[{ required: true, message: '密码不能为空' }]"
         >
-          <el-input placeholder="请输入密码" type="password" v-model="form.password">
+          <el-input
+            placeholder="请输入密码"
+            type="password"
+            v-model="form.password"
+          >
             <template slot="prepend"><i class="el-icon-lock"></i></template>
           </el-input>
         </el-form-item>
-        <el-button type="primary"  style='width:100%;margin-top:10px' @click="onSubmit">登&nbsp;&nbsp;录</el-button>
+        <el-button
+          type="primary"
+          style="width:100%;margin-top:10px"
+          @click="onSubmit"
+          >登&nbsp;&nbsp;录</el-button
+        >
       </el-form>
     </div>
   </div>
 </template>
 
 <script>
-const {
-  HOME_NAME
-} = config.ROUTER;
-import { mapActions } from 'vuex'
-import config from '@/config';
+const { HOME_NAME } = config.ROUTER;
+import { mapActions } from "vuex";
+import config from "@/config";
 export default {
-  data(){
+  data() {
     return {
-      form:{
-        name:'', 
-        password:''
+      form: {
+        name: "",
+        password: ""
       }
-    }
+    };
   },
-  methods:{
-    ...mapActions([
-      'handleLogin',
-      'getUserInfo'
-    ]),
-    onSubmit(){
-      this.$refs.form.validate((valid) => {
+  methods: {
+    ...mapActions(["handleLogin", "getUserInfo"]),
+    onSubmit() {
+      this.$refs.form.validate(valid => {
         if (valid) {
-          this.handleLogin(this.form).then(res => {
-            return this.getUserInfo().then(res => {
-              this.$router.replace({name:HOME_NAME})
+          this.handleLogin(this.form)
+            .then(res => {
+              return this.getUserInfo().then(res => {
+                this.$router.replace({ name: HOME_NAME });
+              });
             })
-          }).catch(()=>{
-            this.$message.error('用户名或密码错误');
-          })
+            .catch(() => {
+              this.$message.error("用户名或密码错误");
+            });
         } else {
           return false;
         }
-      })
+      });
     }
   }
 };
@@ -73,7 +77,7 @@ export default {
 <style lang="scss">
 .login-container {
   height: 100%;
-  width:100%;
+  width: 100%;
   background-image: url(../../assets/image/login-bg.jpg);
   background-size: cover;
   background-position: 50%;
@@ -85,15 +89,15 @@ export default {
     background: #fff;
     position: relative;
     font-size: 14px;
-    transition: all .2s ease-in-out;
-    top:-20px;
-    right:10%;
+    transition: all 0.2s ease-in-out;
+    top: -20px;
+    right: 10%;
     border-radius: 4px;
-    .login-head{
+    .login-head {
       border-bottom: 1px solid #e8eaec;
       padding: 14px 16px;
       line-height: 1;
-      span{
+      span {
         line-height: 20px;
         font-size: 16px;
         color: #17233d;
@@ -103,19 +107,18 @@ export default {
         white-space: nowrap;
       }
     }
-    .login-body{
+    .login-body {
       padding: 20px 20px 30px 20px;
-      .el-input-group__prepend{
-        padding:0 10px;
+      .el-input-group__prepend {
+        padding: 0 10px;
       }
     }
-    .is-error{
-      .el-input-group__prepend{
-        padding:0 10px;
-        border-color: #F56C6C;
+    .is-error {
+      .el-input-group__prepend {
+        padding: 0 10px;
+        border-color: #f56c6c;
       }
     }
-    
   }
 }
 </style>
