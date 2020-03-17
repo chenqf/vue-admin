@@ -209,6 +209,15 @@ export default [
           title: "图标"
         },
         component: () => import("@/view/demo/font.vue")
+      },
+      {
+        path: "socket",
+        name: "socket",
+        meta: {
+          icon: "el-icon-news",
+          title: "socket"
+        },
+        component: () => import("@/view/demo/socket.vue")
       }
     ]
   },
