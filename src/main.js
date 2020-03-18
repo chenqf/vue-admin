@@ -7,6 +7,7 @@ import DomPortal from "vue-dom-portal";
 import importDirective from "@/directive";
 import router from "./router";
 import store from "./store";
+import "./libs/global_catch";
 import "./registerServiceWorker";
 
 //TODO 开发环境-引入mock

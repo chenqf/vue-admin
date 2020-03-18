@@ -5,7 +5,7 @@ export default {
   BASE_TITLE: "Admin",
   HTTP: {
     PROTOCOL: DEV ? "http:" : "http:",
-    HOSTNAME: DEV ? "10.13.1.93" : "10.13.1.93",
+    HOSTNAME: DEV ? "127.0.0.1" : "127.0.0.1",
     PORT: DEV ? "3001" : "3001",
     WITH_CREDENTIALS: DEV ? true : true,
     TIMEOUT: DEV ? 3000 : 3000
