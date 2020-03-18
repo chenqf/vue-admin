@@ -161,7 +161,7 @@ export default [
     component: Main,
     meta: {
       icon: "el-icon-menu",
-      title: "_demo",
+      title: "demo",
       showAlways: true
     },
     children: [
@@ -197,9 +197,18 @@ export default [
         name: "slider",
         meta: {
           icon: "el-icon-news",
-          title: "demo"
+          title: "轮播"
         },
         component: () => import("@/view/demo/slider.vue")
+      },
+      {
+        path: "font",
+        name: "font",
+        meta: {
+          icon: "el-icon-news",
+          title: "图标"
+        },
+        component: () => import("@/view/demo/font.vue")
       }
     ]
   },

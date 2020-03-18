@@ -7,8 +7,21 @@ import DomPortal from "vue-dom-portal";
 import importDirective from "@/directive";
 import router from "./router";
 import store from "./store";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+//实心
+import { fas } from "@fortawesome/free-solid-svg-icons";
+//品牌
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
 import "./libs/global_catch";
 import "./registerServiceWorker";
+
+// font-awesome 图标使用
+library.add(fas);
+library.add(fab);
+// library.add(regular);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 //TODO 开发环境-引入mock
 if (config.DEBUG) {
