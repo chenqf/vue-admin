@@ -191,6 +191,15 @@ export default [
           title: "demo"
         },
         component: () => import("@/view/demo/demo.vue")
+      },
+      {
+        path: "slider",
+        name: "slider",
+        meta: {
+          icon: "el-icon-news",
+          title: "demo"
+        },
+        component: () => import("@/view/demo/slider.vue")
       }
     ]
   },
