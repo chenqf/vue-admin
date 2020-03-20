@@ -34,7 +34,7 @@
       <div class="main-container">
         <!-- 启用keep-alive需要保证routers中name与view中的name相同 -->
         <keep-alive :include="cacheList">
-          <router-view />
+          <router-view @close-page="closeTag" />
         </keep-alive>
       </div>
 
@@ -122,7 +122,7 @@ export default {
       "changeOpenTagNav",
       "changeFixedHeader",
       "setBreadCrumb",
-      "closeTag",
+      // "closeTag",
       "addTag",
       "setTagNavList",
       "setHomeRoute"
@@ -135,6 +135,21 @@ export default {
         params,
         query
       });
+    },
+    closeTag() {
+      const index = this.tagNavList.findIndex(item =>
+        routeEqual(item, this.$route)
+      );
+      let nextRoute;
+      if (index === this.tagNavList.length - 1) {
+        nextRoute = this.tagNavList[index - 1];
+      } else {
+        nextRoute = this.tagNavList[index + 1];
+      }
+      this.$router.push(nextRoute);
+      this.setTagNavList(
+        this.tagNavList.filter((i, _index) => index !== _index)
+      );
     },
     //关闭单一tag TODO 考虑beforeClose的问题
     closeTagEvent(route) {
