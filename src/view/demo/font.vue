@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div>
+      引入自己的图标
+      <span class="iconfont icon-qq"></span>
+      <span class="iconfont icon-qq1"></span>
+    </div>
+
     <div class="font-container flex-container">
       尺寸
       <font-awesome-icon icon="adjust" size="xs" />
@@ -127,8 +133,13 @@
     </div>
   </div>
 </template>
+<script>
+export default {};
+</script>
 
 <style lang="scss" scoped>
+// 引入自己的图标
+@import url(../../assets/font/iconfont.css);
 .font-container {
   height: 200px;
   width: 100%;
