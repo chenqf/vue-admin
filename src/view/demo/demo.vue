@@ -1,9 +1,8 @@
 <template>
   <div>
     <keep-alive>
-      <component :title="titleValue" :is="currentComponent"></component>
+      <component :title.sync="titleValue" :is="currentComponent"></component>
     </keep-alive>
-
     <br />
     <br />
     <button @click="changeTitle">changeTitle</button>
